@@ -1,0 +1,116 @@
+.log-wrapper{
+	text-align:center;
+	font-size:12px;
+}
+
+.log-header{
+	height:10%;
+	position:relative;
+}
+.log-header-content{
+	position:absolute;
+	width:95%;
+	top:50%;
+	left:50%;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	-moz-transform: translateX(-50%) translateY(-50%);
+	-ms-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+}
+
+.log-header-left{
+	float:left;
+}
+.log-header-right{
+	float:right;
+}
+.log-header-right button{
+	width:80px;
+	height:40px;
+	color:RGB(255,205,129);
+	border:1px solid RGB(255,205,129);
+	border-radius: 5px;
+}
+
+
+#log-clearBtn{
+	background: url("../images/icon_delete_normal.png") 10px center no-repeat;
+}
+#log-clearBtn:hover{
+	background: url("../images/icon_delete_hover.png") 10px center no-repeat;
+	cursor:pointer;
+}
+#log-refreshBtn{
+	background: url("../images/icon_Refresh_normal.png") 10px center no-repeat;
+}
+#log-refreshBtn:hover{
+	background: url("../images/icon_Refresh_hover.png") 10px center no-repeat;
+	cursor:pointer;
+}
+#log-mointer-select,#log-error-level-select{
+	border:1px solid RGB(177,177,177);
+	border-radius:5px;
+	width:130px;
+	height:40px;
+	padding-left:10px;
+}
+#log-search-date-input{
+	border:1px solid RGB(177,177,177);
+	border-radius:5px;
+	width:120px;
+	height:40px;
+	padding-left:10px;
+}
+
+
+
+.log-content{
+	height:80%;
+}
+.log-content table{
+	width:100%;
+	font-size:12px;
+}
+.log-content tr{
+	height:30px;
+}
+
+.log-content-head-table{
+	background-color:RGB(248,248,248);
+}
+.log-content-body{
+	width:100%;
+}
+.log-content-body{
+	height:90%;
+	overflow:hidden;
+}
+.log-content-body tr:nth-child(even){
+	background-color:RGB(248,248,248);
+}
+.log-content-body tr:nth-child(odd){
+	background-color:RGB(255,255,255);
+}
+.log-content tr:hover{
+	background-color:RGB(255,205,129);
+}
+.log-content tr td{
+	padding-right:8px;
+	word-break: break-all;
+}
+
+
+
+.log-footer{
+	height:10%;
+	position:relative;
+}
+.log-footer .log-footer-pagination{
+	position:absolute;
+	top:50%;
+	left:50%;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	-moz-transform: translateX(-50%) translateY(-50%);
+	-ms-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+}	

@@ -1,0 +1,604 @@
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(../fonts/MaterialIcons-Regular.woff2) format('woff2'),
+    url(../fonts/MaterialIcons-Regular.woff) format('woff'),
+    url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+
+.clear{clear:both;}
+.hide{display:none;}
+.show{display:block;}
+
+.fix{position:fixed;}
+.abs{position:absolute;}
+.rel{position:relative;}
+.debugbg{background:rgba(250,0,0,.2);}
+.debugborder{border:1px solid #ffffff;}
+
+.flex-center {
+    display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+.flex-vert-center {
+    display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+*{margin:0; padding:0; box-sizing:border-box;}
+
+img{border:none; outline:none; display:block; width:100%;}
+div{margin:0 auto;}
+ul{list-style:none;}
+a{text-decoration:none; outline:none;}
+a:focus{outline:none;}
+
+.loading-container{
+	position:absolute;
+	width:100%;
+	height:100%;
+	left:0px;
+	top:0px;
+	background:#fff;
+}
+.loading-icon{
+	position:absolute;
+	width:32px;
+	height:32px;
+	left:50%; 
+	top:50%; 
+	transform:translate(-50%, -50%);
+}
+
+
+.zm-btn-without-icon{
+	cursor:pointer;
+	width:100px;
+	height:40px;
+	border:1px solid #F5A623;
+	border-radius:2px;
+	margin:0px 15px;
+	
+	text-align:center;
+	font-size:14px;
+	color:#F5A623;
+	line-height:16px;
+}
+.zm-btn-without-icon:hover{
+	border:1px solid #C4841C;
+	color:#C4841C;
+}
+
+.zm-btn-with-icon{
+	cursor:pointer;
+	width:130px;
+	height:40px;
+	border:1px solid #F5A623;
+	border-radius:2px;
+	margin:0px 15px;
+	
+	text-align:center;
+	font-size:14px;
+	color:#F5A623;
+	line-height:16px;
+}
+.zm-btn-with-icon:hover{
+	border:1px solid #C4841C;
+	color:#C4841C;
+}
+
+.zm-btn-with-icon .zm-btn-icon{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	margin-right:10px;
+	
+	background-position:center;
+	background-size:contain;
+	background-repeat:no-repeat;
+}
+
+.zm-btn-media{
+	cursor:pointer;
+	display:inline-block;
+	width:20px;
+	height:20px;
+	margin:0px 3px;
+	border:none;
+	
+	background-color:transparent;
+	background-position:center; 
+	background-size:contain; 
+	background-repeat:no-repeat;
+}
+.zm-btn-media-pause{
+	background-image:url(../images/icon_timeout_normal.png); 
+}
+.zm-btn-media-pause:hover,
+.zm-btn-media-pause.active{
+	background-image:url(../images/icon_timeout_hover.png); 
+}
+.zm-btn-media-pause.active{
+	cursor:auto;
+}
+.zm-btn-media-pause.inactive{
+	cursor:auto;
+	background-image:url(../images/icon_timeout_disable.png); 
+}
+
+.zm-btn-media-play{
+	background-image:url(../images/icon_play_normal.png); 
+}
+.zm-btn-media-play:hover,
+.zm-btn-media-play.active{
+	background-image:url(../images/icon_play_hover.png); 
+}
+.zm-btn-media-play.active{
+	cursor:auto;
+}
+.zm-btn-media-play.inactive{
+	cursor:auto;
+	background-image:url(../images/icon_play_disable.png); 
+}
+
+.zm-btn-media-zoomout{
+	background-image:url(../images/icon_zoomout_normal.png); 
+}
+.zm-btn-media-zoomout:hover,
+.zm-btn-media-zoomout.active{
+	background-image:url(../images/icon_zoomout_hover.png); 
+}
+.zm-btn-media-zoomout.active{
+	cursor:auto;
+}
+.zm-btn-media-zoomout.inactive{
+	cursor:auto;
+	background-image:url(../images/icon_zoomout_disable.png); 
+}
+
+
+html,body{ width:100%; height:100%; overflow:hidden; background:#fff; color:#000; }
+
+.wrapper{
+	position:relative;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+
+.leftBar{
+	position:absolute;
+	width:80px;
+	height:100%;
+	background-color:RGB(36,35,41);
+}
+
+.rightBar{
+	position:absolute;
+	left:80px;
+	right:0px;
+	height:100%;
+	overflow: hidden;
+}
+
+.pngListTop{
+	position:relative;
+	height:100px;
+}
+.pngListTop img{
+	position:absolute;
+	width:25px;
+	height:25px;
+	top:30%;
+	left:50%;
+	margin-left:-12.5px;
+}
+
+.pngList{
+	position:relative;
+	height:66px;
+}
+/*左侧状态栏点击后的样式*/
+.leftBar .active{
+	background-color:RGB(115,115,117);
+	border-left:3px solid RGB(18,192,50);
+	color:RGB(18,192,50);
+}
+
+.pngList:hover:not(.excludePngList){
+	background-color:grey;
+	border-left:3px solid RGB(18,192,50);
+	cursor:pointer;
+}
+.pngList div:first-child{
+	height:40px;
+}
+.pngList div:nth-child(2){
+	text-align:center;
+	color:white;
+	font-size:12px;
+	height:26px;
+	line-height:26px;
+}
+.pngList img{
+	position:absolute;
+	width:25px;
+	height:25px;
+	top:20%;
+	left:50%;
+	margin-left:-12.5px;
+}
+
+.pngListBottom{
+	position:absolute;
+	width:100%;
+	bottom:0;
+}
+
+
+
+.popup-container{
+	display:none;
+	width:100%;
+	height:100%;
+	z-index:1000;
+	position:fixed;
+	top:0;
+	left:0;
+	background-color:RGBA(0,0,0,0.6);
+}
+.popup-title-bar{
+	position:relative;
+	width:100%;
+	height:50px;
+	background:#242329;
+}
+.popup-title{
+	padding-left:20px;
+	font-size:16px;
+	color:#fff;
+	line-height:50px;
+	letter-spacing:1px;
+}
+.popup-close{
+	cursor:pointer;
+	position:absolute;
+	width:16px;
+	height:16px;
+	right:20px;
+	top:17px;
+	background-position:center; 
+	background-size:contain; 
+	background-repeat:no-repeat;
+	background-image:url(../images/icon_close.png); 
+}
+
+/*ajax请求等待过程中的遮罩，应该处于其他遮罩的顶层*/
+#popup_log{
+	z-index:10000;
+}
+
+/*删除确认弹框*/
+.delete-confirm-container{
+	position:absolute;
+	width:500px;
+	height:280px;
+	left:50%; 
+	top:50%;
+	transform:translate(-50%, -50%);
+	border-radius:4px;
+	overflow:hidden;
+	background:#fff;
+}
+.delete-confirm-inner{
+	position:absolute;
+	left:20px;
+	right:20px;
+	top:70px;
+	bottom:20px;
+}
+.delete-confirm-text{
+	text-align:center;
+	font-size:16px;
+	margin-top:50px;
+}
+.delete-confirm-btn-bar{
+	position:absolute;
+	width:100%;
+	left:0px;
+	bottom:0px;
+	text-align:center;
+}
+
+
+/*
+***************************************************************************************
+							以下为遮罩层上的元素
+***************************************************************************************
+*/
+
+/*登出层的样式*/
+.logout-container{
+	position:absolute;
+	width:400px;
+	height:250px;
+	top:50%;
+	left:50%;
+	margin-left:-200px;
+	margin-top:-125px;
+	background-color:white;
+	z-index:1001;
+	border-radius: 10px;
+}
+
+.logout-container button{
+	width:75px;
+	height:25px;
+	border-radius:3px;
+}
+.logout-container button:hover{
+	border:2px solid #F5A623;
+	color:#F5A623;
+	cursor: pointer;
+}
+
+.logout-container-div1{
+	text-align:left;
+	padding-left:20px;
+	height:40px;
+	line-height:40px;
+	background-color:RGB(36,35,41);
+	color:white;
+	border-radius: 10px 10px 0px 0px;
+	font-size:12px;
+}
+.logout-container-div2{
+	height:90px;
+	width:100%;
+	position:relative;
+}
+.logout-container-div2 img{
+	display:inline;
+	width:50px;
+	height:50px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-left:-25px;
+	margin-top:-25px;
+}
+.logout-container-div3{
+	text-align:center;
+	height:50px;
+	line-height:50px;
+}
+.logout-container-div4{
+	text-align:center;
+	height:80px;
+	line-height:60px;
+}
+
+
+.log-container{
+	position:absolute;
+	width:50px;
+	height:50px;
+	top:50%;
+	left:50%;
+	margin-left:-25px;
+	margin-top:-25px;
+	z-index:1001;
+	border-radius: 10px;
+}
+
+/*监视器面板详情样式*/
+.monitor-config-container{
+	position:absolute;
+	width:700px;
+	height:500px;
+	left:50%;
+	top:50%;
+	z-index:1001;
+	background-color:white;
+	border-radius:5px;
+	-webkit-transform:translateX(-50%) translateY(-50%);
+	-moz-transform:translateX(-50%) translateY(-50%);
+	-ms-transform:translateX(-50%) translateY(-50%);
+	transform:translateX(-50%) translateY(-50%);
+}
+.monitor-config-head{
+	height:50px;
+	background-color:RGB(36,35,41);
+	padding-left:10px;
+	margin-bottom:5px;
+	position:relative;
+	color:white;
+	border-radius:5px 5px 0px 0px;
+}
+.monitor-config-head-content{
+	position:absolute;
+	top:50%;
+	-webkit-transform:translateY(-50%);
+	-moz-transform:translateY(-50%);
+	-ms-transform:translateY(-50%);
+	transform:translateY(-50%);
+}
+.monitor-config-head-exit{
+	position:absolute;
+	top:50%;
+	-webkit-transform:translateY(-50%);
+	-moz-transform:translateY(-50%);
+	-ms-transform:translateY(-50%);
+	transform:translateY(-50%);
+	right:1%;
+}
+.monitor-config-head-exit:hover{
+	cursor:pointer;
+}
+
+.monitor-config-content{
+	height:450px;
+}
+.monitor-config-content-ul{
+	display:block;
+}
+.monitor-config-content-ul li{
+	float:left;
+	margin-right:3px;
+	padding:5px 10px 5px 10px;
+	text-align:center;
+	font-size:14px;
+	font-weight:5px;
+	color:RGB(189,189,189);
+	
+}
+.monitor-config-content-ul li:hover{
+	background-color:RGB(204,207,209);
+	cursor:pointer;
+}
+.monitor-config-content-ul .active{
+	background-color:white;
+	color:RGB(120,193,40);
+	border-bottom:3px solid RGB(99,184,7);
+}
+.monitor-config-content table{
+	border-collapse:collapse;
+	width:100%;
+	font-size:12px;
+}
+/*
+.monitor-config-content table tr{
+	border-bottom:2px solid RGB(242,242,242);
+}*/
+.monitor-config-content table td{
+	padding:6px 10px 6px 20px;
+}
+.monitor-config-content table td:first-child{
+	width:40%;
+}
+
+.monitor-config-content table input[type=text],.monitor-config-content table input[type=number],.monitor-config-content table input[type=password],.monitor-config-content table select{
+	height:25px;
+	width:80%;
+	border-radius:4px;
+	border:1px solid RGB(204,204,204);
+	padding:3px 5px 3px 5px;
+}
+/*
+.monitor-config-content table input[type=number]{
+	height:25px;
+	width:60px;
+	border-radius:4px;
+	border:1px solid RGB(204,204,204);
+	padding:3px 5px 3px 5px;
+}
+.monitor-config-content table select{
+	height:25px;
+	border-radius:4px;
+	border:1px solid RGB(204,204,204);
+	padding:3px 5px 3px 5px;
+}
+*/
+.monitor-config-content table textarea{
+	width:80%;
+	border-radius:4px;
+	border:1px solid RGB(204,204,204);
+	padding:3px 5px 3px 5px;
+}
+.monitor-config-content-ul-div{
+	height:30px;
+	padding-left:20px;
+	border-bottom:2px solid RGB(242,242,242);
+	margin-bottom:5px;
+}
+.monitor-config-content-table-srcoll{
+	height:75%;
+	overflow: hidden;
+}
+.monitor-config-content-bottom{
+	height:auto;
+	width:100%;
+	text-align:right;
+	padding:15px 90px 0px 0px;
+}
+.monitor-config-content-bottom button{
+	height:30px;
+	width:70px;
+	border-radius:4px;
+	font-weight: 4px;
+	border:1px solid RGB(231,231,231);
+	background-color:RGB(244,244,244);
+}
+.monitor-config-content-bottom button:hover{
+	border:2px solid RGB(255,222,170);
+	color:RGB(255,222,170);
+	cursor:pointer;
+}
+
+/*提示框样式*/
+.popup_notice_container{
+	position:absolute;
+	width:500px;
+	height:120px;
+	top:50%;
+	left:50%;
+	margin-left:-150px;
+	margin-top:-60px;
+	background-color:white;
+	z-index:1001;
+	border-radius: 10px;
+	text-align: center;
+	line-height: 120px;
+}
+
+
+.material-icons{
+	vertical-align:middle;
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;  /* Preferred icon size */
+	display: inline-block;
+	line-height: 1;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+
+	/* Support for IE. */
+	font-feature-settings: 'liga';
+}

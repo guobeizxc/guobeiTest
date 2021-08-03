@@ -1,0 +1,89 @@
+html, body{ 
+	margin: 0px;
+	padding: 0px;
+	background:#eee; 
+	color:#333; 
+}
+
+.wrapper{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background-position:center; 
+	background-size:cover; 
+	background-repeat:no-repeat;
+	background-image:url(../images/bg.png); 
+}
+
+.login-icon{
+	position:absolute;
+	width: 80px;
+    height: 80px;
+    left: 50%;
+    margin-left: -40px;
+    top: -40px;
+}
+
+.login-title{
+	margin-top: 20px;
+	margin-bottom: 30px;
+	text-align: center;
+	font-size: 14px;
+	color: #333;
+}
+.login-message{
+	text-align:left;
+	font-size:14px;
+	line-height:30px;
+	color:red;
+}
+
+.divForm{
+	position:absolute;
+	width:330px;
+	min-height:260px;
+	left:50%; 
+	top:50%; 
+	transform:translate(-50%, -50%);
+	padding:25px 60px;
+	border-radius: 10px;
+	border:1px solid RGB(231,231,231);
+	background-color:RGB(255,255,255);
+
+}
+
+.divForm .form-item{
+	margin-bottom:20px;
+}
+
+.divForm input{
+	width:100%;
+	height:40px;
+	padding:0px 15px;
+	
+	font-size:14px;
+	line-height:40px;
+	
+	outline:none;
+	border:1px solid #cdcdcd;
+	border-radius:4px;
+}
+.divForm input:focus {
+    border: 1px solid #6fbd1a;
+}
+
+.divForm button{
+	width:100%;
+	height:40px;
+	margin-top:20px;
+	
+	text-align:center;
+	font-size:14px;
+	line-height:40px;
+	color: #fff;
+	
+	border: none;
+	background-color:#252525;
+	border-radius:4px;
+}

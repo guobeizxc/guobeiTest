@@ -1,0 +1,1464 @@
+<!--[if IE]>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>ZM</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=8" />
+	<link rel="icon" type="image/ico" href="images/favicon.ico"/>
+	
+	<link rel="stylesheet" href="css/index.css" />
+	<link rel="stylesheet" href="css/monitor.css" />
+	<link rel="stylesheet" href="css/event.css" />
+	<link rel="stylesheet" href="css/config.css" />
+	<link rel="stylesheet" href="css/log.css" />
+	<link rel="stylesheet" href="css/pagination.css" />
+	<link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css" />
+	<link rel="stylesheet" href="css/swiper.min.css" />
+
+	<!-- video-js播放视频 -->
+	<link rel="stylesheet" href="js/video-js.min.css">
+	<script src="js/video.js"></script>
+	<script>
+		videojs.options.flash.swf = "js/video-js.swf"
+
+		
+	</script>
+</head>
+<body style="display:none">
+	<div id="container">
+		<div class="leftBar">
+			<div class="pngListTop">
+				<img id="logo" src="images/logo.png" />
+			</div>
+			<div class="pngList left-tab active" data-ref="monitor">
+				<div>
+					<img id="icon_preview" src="images/icon_preview/icon_preview_normal.png" />
+				</div>
+				<div>##$@@$##预览##$@@$##</div>
+			</div>
+			<div class="pngList left-tab" data-ref="event">
+				<div>
+					<img id="icon_replay" src="images/icon_Replay/icon_Replay_normal.png" />
+				</div>
+				<div>##$@@$##回放##$@@$##</div>
+			</div>
+			<div class="pngList left-tab" data-ref="config">
+				<div>
+					<img id="icon_configuration" src="images/icon_Configuration/icon_Configuration_normal.png" />
+				</div>
+				<div>##$@@$##配置##$@@$##</div>
+			</div>
+			<div class="pngList left-tab" data-ref="log">
+				<div>
+					<img id="icon_log" src="images/icon_Log/icon_Log_normal.png" />
+				</div>
+				<div>##$@@$##日志##$@@$##</div>
+			</div>
+			<!--
+			<div class="pngListRemain" style="height:120px;">
+			</div>
+			-->
+			<div class="pngListBottom">
+				<div class="pngList excludePngList">
+					<div>
+						<img id="login_user" src="images/login_user_normal.png" />
+					</div>
+					<div id="username" style="text-align:center;color:white;font-size:12px;">test</div>
+				</div>
+				<div class="pngList" id="btn_logout">
+					<div>
+						<img id="icon_logout" src="images/icon_Logout/icon_Logout_normal.png" />
+					</div>
+					<div>##$@@$##注销##$@@$##</div>
+				</div>
+			</div>
+		</div>
+		<div class="rightBar" id="main_container">
+			<!-- js加载对应的页面 -->
+		</div>
+	</div>
+
+
+	<!--登出界面，退出时显示，包含遮罩-->
+	<div class="popup-container" id="popup_logout">
+		<div class="logout-container">
+			<div class="logout-container-div1">##$@@$##提示##$@@$##</div>
+			<div class="logout-container-div2">
+				<img src="images/logout.png" width="50px" height="50px"/>
+			</div>
+			<div class="logout-container-div3">##$@@$##确定要注销吗##$@@$##?</div>
+			<div class="logout-container-div4">
+				<button id="confirmBtn">##$@@$##确定##$@@$##</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="cancelBtn" style="margin-left:-20px">##$@@$##取消##$@@$##</button>
+			</div>
+		</div>
+	</div>
+
+	<!--请求等待界面，发起请求时显示，包含遮罩-->
+	<div class="popup-container" id="popup_log">
+		<div class="log-container">
+			<img src="images/ajax-loader.gif" width="100%" height="100%">
+		</div>
+	</div>
+
+	<!--监控配置界面，在左侧预览项中点击视频右上角...的编辑功能时显示，包含遮罩-->
+	<div class="popup-container" id="popup_monitor">
+		<div class="monitor-config-container">
+			<div class="monitor-config-head">
+				<div class="monitor-config-head-content"><span id="monitorTitle"></span></div>
+				<span class="monitor-config-head-exit popup-close" onclick="$('#popup_monitor').hide()"></span>
+			</div>
+			<div class="monitor-config-content">
+				<div class="monitor-config-content-ul-div">
+					<!--选项卡-->
+					<ul class="monitor-config-content-ul">
+						<li id="monitor-config-content-ul-general" class="active">##$@@$##General##$@@$##</li>
+						<li id="monitor-config-content-ul-source">##$@@$##Source##$@@$##</li>
+						<li id="monitor-config-content-ul-storage">##$@@$##Storage##$@@$##</li>
+						<li id="monitor-config-content-ul-timestamp">##$@@$##Timestamp##$@@$##</li>
+						<li id="monitor-config-content-ul-buffers">##$@@$##Buffers##$@@$##</li>
+						<li id="monitor-config-content-ul-control">##$@@$##Control##$@@$##</li>
+						<li id="monitor-config-content-ul-misc">##$@@$##Misc##$@@$##</li>
+					</ul>
+				</div>
+				<div class="monitor-config-content-table-srcoll">
+					<!--监视器的Id-->
+					<input type="hidden" id="newMonitor[Id]" name="newMonitor[Id]"/>
+					<!--区分是编辑流程还是新增流程，edit为编辑，add为新增-->
+					<input type="hidden" id="operateType" name="operateType"/>
+
+					<!--General选项卡 默认显示-->
+					<table class="monitor-config-content-table" id="monitor-config-content-table-general" ref="monitor-config-content-ul-general">
+						<tr>
+							<td>##$@@$##Name##$@@$##</td>
+							<td><input type="text" id="newMonitor[Name]" name="newMonitor[Name]" /></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Notes##$@@$##</td>
+							<td><textarea id="newMonitor[Notes]" name="newMonitor[Notes]" rows="4"></textarea></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Server##$@@$##</td>
+							<td>
+								<select id="newMonitor[ServerId]" name="newMonitor[ServerId]">
+									<option value="">##$@@$##None##$@@$##</option>
+									<option value="0">##$@@$##Auto##$@@$##</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Source Type##$@@$##</td>
+							<td>
+								<select id="newMonitor[Type]" name="newMonitor[Type]">
+									<option value="Local" selected="selected">##$@@$##Local##$@@$##</option>
+									<option value="Remote">##$@@$##Remote##$@@$##</option>
+									<option value="File">##$@@$##File##$@@$##</option>
+									<option value="Ffmpeg">##$@@$##Ffmpeg##$@@$##</option>
+									<option value="Libvlc">##$@@$##Libvlc##$@@$##</option>
+									<option value="cURL">##$@@$##cURL (HTTP(S) only)##$@@$##</option>
+									<option value="WebSite">##$@@$##Web Site##$@@$##</option>
+									<!--<option value="NVSocket">##$@@$##NVSocket##$@@$##</option>-->
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Function##$@@$##</td>
+							<td>
+								<select id="newMonitor[Function]" name="newMonitor[Function]">
+									<option value="None">##$@@$##None##$@@$##</option>
+									<option value="Monitor" selected="selected">##$@1@$##Monitor##$@1@$##</option>
+									<option value="Modect">##$@@$##Modect##$@@$##</option>
+									<option value="Record">##$@@$##Record##$@@$##</option>
+									<option value="Mocord">##$@@$##Mocord##$@@$##</option>
+									<option value="Nodect">##$@@$##Nodect##$@@$##</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Enable##$@@$##</td>
+							<td><input type="checkbox" id="newMonitor[Enabled]" name="newMonitor[Enabled]" /></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Linked Monitors##$@@$##</td>
+							<td><input type="text" id="newMonitor[LinkedMonitors][]" name="newMonitor[LinkedMonitors][]" /></td>
+						</tr>
+						<!--
+						<tr>
+							<td>##$@@$##Groups##$@@$##</td>
+							<td><input type="text" id="newMonitor[GroupIds][]" name="newMonitor[GroupIds][]" /></td>
+						</tr>
+						-->
+						<tr>
+							<td>##$@@$##Analysis FPS##$@@$##</td>
+							<td><input type="number" id="newMonitor[AnalysisFPSLimit]" name="newMonitor[AnalysisFPSLimit]" min=0 /></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Maximum FPS##$@@$##</td>
+							<td><input type="number" id="newMonitor[MaxFPS]" name="newMonitor[MaxFPS]" min=0 /></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Alarm Maximum FPS##$@@$##</td>
+							<td><input type="number" id="newMonitor[AlarmMaxFPS]" name="newMonitor[AlarmMaxFPS]" min=0 /></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Reference Image Blend %ge##$@@$##</td>
+							<td>
+								<select id="newMonitor[RefBlendPerc]" name="newMonitor[RefBlendPerc]">
+									<option value="0">##$@@$##No blending##$@@$##</option>
+									<option value="1">1.5625%</option>
+									<option value="3">3.125%</option>
+									<option value="6" selected="selected">##$@@$##6.25% (Indoor)##$@@$##</option>
+									<option value="12">##$@@$##12.5% (Outdoor)##$@@$##</option>
+									<option value="25">25%</option>
+									<option value="50">50%</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Alarm Reference Image Blend %ge##$@@$##</td>
+							<td>
+								<select id="newMonitor[AlarmRefBlendPerc]" name="newMonitor[AlarmRefBlendPerc]">
+									<option value="0">##$@@$##No blending (Alarm lasts forever)##$@@$##</option>
+									<option value="1">1.5625%</option>
+									<option value="3">3.125%</option>
+									<option value="6" selected="selected">6.25%</option>
+									<option value="12">12.5%</option>
+									<option value="25">25%</option>
+									<option value="50">##$@@$##50% (Alarm lasts a moment)##$@@$##</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Triggers##$@@$##</td>
+							<td>##$@@$##None available##$@@$##</td>
+						</tr>
+					</table>
+
+					<!--
+						Source选项卡,受到General选项卡中Source Type项的影响会有4种不一样的结果
+					-->
+					<!--对应General选项卡中Source Type为Local的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-local-source" ref="monitor-config-content-ul-source">
+						<tr>
+							<td>##$@@$##Device Path##$@@$##</td>
+							<td><input type="text" id="local-newMonitor[Device]" name="local-newMonitor[Device]" /></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Capture Method##$@@$##</td>
+							<td>
+								<select id="local-newMonitor[Method]" name="local-newMonitor[Method]">
+									<option value="v4l2">##$@@$##Video For Linux version 2##$@@$##</option>
+									<option value="v4l1">##$@@$##Video For Linux version 1##$@@$##</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Device Channel##$@@$##</td>
+							<td>
+								<select id="local-newMonitor[Channel]" name="local-newMonitor[Channel]">
+									<option value="0">0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+									<option value="24">24</option>
+									<option value="25">25</option>
+									<option value="26">26</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="31">31</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Device Format##$@@$##</td>
+							<td>
+								<select id="local-newMonitor[Format]" name="local-newMonitor[Format]">
+									<option value="255">PAL</option>
+									<option value="45056">NTSC</option>
+									<option value="1">PAL B</option>
+									<option value="2">PAL B1</option>
+									<option value="4">PAL G</option>
+									<option value="8">PAL H</option>
+									<option value="16">PAL I</option>
+									<option value="32">PAL D</option>
+									<option value="64">PAL D1</option>
+									<option value="128">PAL K</option>
+									<option value="256">PAL M</option>
+									<option value="512">PAL N</option>
+									<option value="1024">PAL Nc</option>
+									<option value="2048">PAL 60</option>
+									<option value="4096">NTSC M</option>
+									<option value="8192">NTSC M JP</option>
+									<option value="16384">NTSC 443</option>
+									<option value="32768">NTSC M KR</option>
+									<option value="65536">SECAM B</option>
+									<option value="131072">SECAM D</option>
+									<option value="262144">SECAM G</option>
+									<option value="524288">SECAM H</option>
+									<option value="1048576">SECAM K</option>
+									<option value="2097152">SECAM K1</option>
+									<option value="4194304">SECAM L</option>
+									<option value="8388608">SECAM LC</option>
+									<option value="16777216">ATSC 8 VSB</option>
+									<option value="33554432">ATSC 16 VSB</option>
+								</select>
+								<font color="red">*</font>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Capture Palette##$@@$##</td>
+							<td>
+								<select id="local-newMonitor[Palette]" name="local-newMonitor[Palette]">
+									<option value="0" selected="selected">Auto</option>
+									<option value="1497715271">Grey</option>
+									<option value="877807426">BGR32</option>
+									<option value="876758866">RGB32</option>
+									<option value="861030210">BGR24</option>
+									<option value="859981650">RGB24</option>
+									<option value="1448695129">*YUYV</option>
+									<option value="1195724874">*JPEG</option>
+									<option value="1196444237">*MJPEG</option>
+									<option value="826427218">RGB332</option>
+									<option value="875836498">*RGB444</option>
+									<option value="1329743698">*RGB555</option>
+									<option value="1346520914">*RGB565</option>
+									<option value="1498831189">*UYVY</option>
+									<option value="1345466932">*YUV422P</option>
+									<option value="1345401140">*YUV411P</option>
+									<option value="875836505">*YUV444</option>
+									<option value="842094158">NV12</option>
+									<option value="961959257">*YUV410</option>
+									<option value="842093913">*YUV420</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Multi Buffering##$@@$##</td>
+							<td>
+								<input type="radio" id="local-newMonitor[V4LMultiBuffer]1" name="local-newMonitor[V4LMultiBuffer]" value="1" />
+								<label for="newMonitor[V4LMultiBuffer]1">Yes</label>
+								<input type="radio" id="local-newMonitor[V4LMultiBuffer]0" name="local-newMonitor[V4LMultiBuffer]" value="0" />
+								<label for="newMonitor[V4LMultiBuffer]0">No</label>
+								<input type="radio" id="local-newMonitor[V4LMultiBuffer]" name="local-newMonitor[V4LMultiBuffer]" checked="checked" value="" />
+								<label for="newMonitor[V4LMultiBuffer]">Use Config Value</label>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Captures Per Frame##$@@$##</td>
+							<td><input type="number" id="local-newMonitor[V4LCapturesPerFrame]" name="local-newMonitor[V4LCapturesPerFrame]" min=1 value=1 /></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Target colorspace##$@@$##</td>
+							<td>
+								<select id="local-newMonitor[Colours]" name="local-newMonitor[Colours]">
+									<option value="1">8 bit greyscale</option>
+									<option value="3">24 bit colour</option>
+									<option value="4" selected="selected">32 bit colour</option>
+								</select>
+							</td>	
+						</tr>
+						<tr>
+							<td>##$@@$##Capture Resolution (pixels)##$@@$##</td>
+							<td>
+								<input type="number" style="width:60px;" id="local-newMonitor[Width]" name="local-newMonitor[Width]" min=1 value="1920" />
+								<input type="number" style="width:60px;" id="local-newMonitor[Height]" name="local-newMonitor[Height]" min=1 value="1080"/>
+								<select id="local-dimensions_select" style="width:auto;" name="local-dimensions_select">
+									<option value="">Custom</option>
+									<option value="176x120">176x120 QCIF</option>
+									<option value="176x144">176x144</option>
+									<option value="320x240">320x240</option>
+									<option value="320x200">320x200</option>
+									<option value="352x240">352x240 CIF</option>
+									<option value="640x480">640x480</option>
+									<option value="640x400">640x400</option>
+									<option value="704x240">704x240 2CIF</option>
+									<option value="704x480">704x480 4CIF</option>
+									<option value="720x480">720x480 D1</option>
+									<option value="1280x720">1280x720 720p</option>
+									<option value="1280x800">1280x800</option>
+									<option value="1280x960">1280x960 960p</option>
+									<option value="1280x1024">1280x1024 1MP</option>
+									<option value="1600x1200">1600x1200 2MP</option>
+									<option value="1920x1080" selected="selected">1920x1080 1080p</option>
+									<option value="2048x1536">2048x1536 3MP</option>
+									<option value="2592x1944">2592x1944 5MP</option>
+									<option value="3840x2160">3840x2160 4K UHD</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Preserve Aspect Ratio##$@@$##</td>
+							<td><input type="checkbox" id="local-newMonitor[preserveAspectRatio]" name="local-newMonitor[preserveAspectRatio]" value="1" /></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Orientation##$@@$##</td>
+							<td>
+								<select name="local-newMonitor[Orientation]" id="local-newMonitor[Orientation]">
+									<option value="ROTATE_0" selected="selected">Normal</option>
+									<option value="ROTATE_90">Rotate Right</option>
+									<option value="ROTATE_180">Inverted</option>
+									<option value="ROTATE_270">Rotate Left</option>
+									<option value="FLIP_HORI">Flipped Horizontally</option>
+									<option value="FLIP_VERT">Flipped Vertically</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Deinterlacing##$@@$##</td>
+							<td>
+								<select id="local-newMonitor[Deinterlacing]" name="local-newMonitor[Deinterlacing]">
+									<option value="0" selected="selected">Disabled</option>
+									<option value="7684">Four field motion adaptive - Soft</option>
+									<option value="5124">Four field motion adaptive - Medium</option>
+									<option value="2564">Four field motion adaptive - Hard</option>
+									<option value="1">Discard</option>
+									<option value="2">Linear</option>
+									<option value="3">Blend</option>
+									<option value="517">Blend (25%)</option>
+									<option value="33554432">V4L2: Capture top field only</option>
+									<option value="50331648">V4L2: Capture bottom field only</option>
+									<option value="117440512">V4L2: Alternate fields (Bob)</option>
+									<option value="16777216">V4L2: Progressive</option>
+									<option value="67108864">V4L2: Interlaced</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					<!--对应General选项卡中Source Type为Remote的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-remote-source" ref="monitor-config-content-ul-source">
+						<tr>
+							<td>##$@@$##Protocol##$@@$##</td>
+							<td>
+								<select name="remote-newMonitor[Protocol]" id="remote-newMonitor[Protocol]" onchange="updateMethods( this );if(this.value=='rtsp'){$('RTSPDescribe').setStyle('display','table-row');}else{$('RTSPDescribe').hide();}">
+									<option value="http" selected="selected">HTTP</option>
+									<option value="rtsp">RTSP</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Method##$@@$##</td>
+							<td>
+								<select name="remote-newMonitor[Method]" id="remote-newMonitor[Method]">
+									<option value="simple">Simple</option>
+									<option value="regexp">Regexp</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Host Name##$@@$##</td>
+							<td><input type="text" name="remote-newMonitor[Host]" id="remote-newMonitor[Host]" value=""></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Port##$@@$##</td>
+							<td><input type="number" name="remote-newMonitor[Port]" id="remote-newMonitor[Port]" value="" min="0" max="65535"></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Path##$@@$##</td>
+							<td><input type="text" name="remote-newMonitor[Path]" id="remote-newMonitor[Path]" value="rtsp://admin:fzj19981018@192.168.0.230/onvif"></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Target colorspace##$@@$##</td>
+							<td>
+								<select name="remote-newMonitor[Colours]" id="remote-newMonitor[Colours]">
+									<option value="1">8 bit greyscale</option>
+									<option value="3">24 bit colour</option>
+									<option value="4" selected="selected">32 bit colour</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Capture Resolution (pixels)##$@@$##</td>
+							<td>
+					            <input type="number" style="width:60px;" name="remote-newMonitor[Width]" id="remote-newMonitor[Width]" value="1920" min="1">
+					            <input type="number" style="width:60px;" name="remote-newMonitor[Height]" id="remote-newMonitor[Height]" value="1080" min="1">
+								<select name="remote-dimensions_select" id="remote-dimensions_select" style="width:auto;">
+									<option value="">Custom</option>
+									<option value="176x120">176x120 QCIF</option>
+									<option value="176x144">176x14</option>
+									<option value="320x240">320x240</option>
+									<option value="320x200">320x200</option>
+									<option value="352x240">352x240 CIF</option>
+									<option value="640x480">640x480</option>
+									<option value="640x400">640x400</option>
+									<option value="704x240">704x240 2CIF</option>
+									<option value="704x480">704x480 4CIF</option>
+									<option value="720x480">720x480 D1</option>
+									<option value="1280x720">1280x720 720p</option>
+									<option value="1280x800">1280x800</option>
+									<option value="1280x960">1280x960 960p</option>
+									<option value="1280x1024">1280x1024 1MP</option>
+									<option value="1600x1200">1600x1200 2MP</option>
+									<option value="1920x1080" selected>1920x1080 1080p</option>
+									<option value="2048x1536">2048x1536 3MP</option>
+									<option value="2592x1944">2592x1944 5MP</option>
+									<option value="3840x2160">3840x2160 4K UHD</option>
+								</select>          
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Preserve Aspect Ratio##$@@$##</td>
+							<td><input type="checkbox" name="remote-preserveAspectRatio" id="remote-preserveAspectRatio" value="1"></td>
+						</tr>
+						<tr>
+							<td>##$@@$##Orientation##$@@$##</td>
+							<td>
+								<select name="remote-newMonitor[Orientation]" id="remote-newMonitor[Orientation]">
+									<option value="ROTATE_0" selected="selected">Normal</option>
+									<option value="ROTATE_90">Rotate Right</option>
+									<option value="ROTATE_180">Inverted</option>
+									<option value="ROTATE_270">Rotate Left</option>
+									<option value="FLIP_HORI">Flipped Horizontally</option>
+									<option value="FLIP_VERT">Flipped Vertically</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Deinterlacing##$@@$##</td>
+							<td>
+								<select name="remote-newMonitor[Deinterlacing]" id="remote-newMonitor[Deinterlacing]">
+									<option value="0" selected="selected">Disabled</option>
+									<option value="7684">Four field motion adaptive - Soft</option>
+									<option value="5124">Four field motion adaptive - Medium</option>
+									<option value="2564">Four field motion adaptive - Hard</option>
+									<option value="1">Discard</option>
+									<option value="2">Linear</option>
+									<option value="3">Blend</option>
+									<option value="517">Blend (25%)</option>
+								</select>
+							</td>
+						</tr>
+						<tr id="RTSPDescribe" style="display: none;">
+							<td>
+								##$@@$##Use RTSP Response Media URL##$@@$##&nbsp;(<a class="popup-link" href="?view=optionhelp&amp;option=OPTIONS_RTSPDESCRIBE" data-window-name="zmOptionHelp" data-window-tag="optionhelp">?</a>) 
+							</td>
+							<td><input type="checkbox" name="remote-newMonitor[RTSPDescribe]" id="remote-newMonitor[RTSPDescribe]" value="1"></td>
+						</tr>
+					</table>
+					<!--对应General选项卡中Source Type为File的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-file-source" ref="monitor-config-content-ul-source">
+						<tr>
+							<td>##$@@$##Source Path##$@@$##</td>
+							<td>
+								<input type="text" name="file-newMonitor[Path]" id="file-newMonitor[Path]" />
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Target colorspace##$@@$##</td>
+							<td>
+								<select name="file-newMonitor[Colours]" id="file-newMonitor[Colours]">
+									<option value="1">8 bit greyscale</option>
+									<option value="3">24 bit colour</option>
+									<option value="4" selected="selected">32 bit colour</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Capture Resolution (pixels)##$@@$##</td>
+							<td>
+					            <input type="number" style="width:60px;" name="file-newMonitor[Width]" id="file-newMonitor[Width]" value="1920" min="1">
+					            <input type="number" style="width:60px;" name="file-newMonitor[Height]" id="file-newMonitor[Height]" value="1080" min="1">
+								<select name="file-dimensions_select" id="file-dimensions_select" style="width:auto;">
+									<option value="">Custom</option>
+									<option value="176x120">176x120 QCIF</option>
+									<option value="176x144">176x14</option>
+									<option value="320x240">320x240</option>
+									<option value="320x200">320x200</option>
+									<option value="352x240">352x240 CIF</option>
+									<option value="640x480">640x480</option>
+									<option value="640x400">640x400</option>
+									<option value="704x240">704x240 2CIF</option>
+									<option value="704x480">704x480 4CIF</option>
+									<option value="720x480">720x480 D1</option>
+									<option value="1280x720">1280x720 720p</option>
+									<option value="1280x800">1280x800</option>
+									<option value="1280x960">1280x960 960p</option>
+									<option value="1280x1024">1280x1024 1MP</option>
+									<option value="1600x1200">1600x1200 2MP</option>
+									<option value="1920x1080" selected="selected">1920x1080 1080p</option>
+									<option value="2048x1536">2048x1536 3MP</option>
+									<option value="2592x1944">2592x1944 5MP</option>
+									<option value="3840x2160">3840x2160 4K UHD</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Preserve Aspect Ratio##$@@$##</td>
+							<td>
+								<input type="checkbox" name="file-preserveAspectRatio" id="file-preserveAspectRatio" value="1">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Orientation##$@@$##</td>
+							<td>
+								<select name="file-newMonitor[Orientation]" id="file-newMonitor[Orientation]">
+									<option value="ROTATE_0" selected="selected">Normal</option>
+									<option value="ROTATE_90">Rotate Right</option>
+									<option value="ROTATE_180">Inverted</option>
+									<option value="ROTATE_270">Rotate Left</option>
+									<option value="FLIP_HORI">Flipped Horizontally</option>
+									<option value="FLIP_VERT">Flipped Vertically</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Deinterlacing##$@@$##</td>
+							<td>
+								<select name="file-newMonitor[Deinterlacing]" id="file-newMonitor[Deinterlacing]">
+									<option value="0" selected="selected">Disabled</option>
+									<option value="7684">Four field motion adaptive - Soft</option>
+									<option value="5124">Four field motion adaptive - Medium</option>
+									<option value="2564">Four field motion adaptive - Hard</option>
+									<option value="1">Discard</option>
+									<option value="2">Linear</option>
+									<option value="3">Blend</option>
+									<option value="517">Blend (25%)</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					<!--对应General选项卡中Source Type为Ffmpeg的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-ffmpeg-source" ref="monitor-config-content-ul-source">
+						<tr>
+							<td>##$@@$##Source Path##$@@$##</td>
+							<td>
+								<input type="text" name="ffmpeg-newMonitor[Path]" id="ffmpeg-newMonitor[Path]" />
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Method##$@@$##</td>
+							<td>
+								<select name="ffmpeg-newMonitor[Method]" id="ffmpeg-newMonitor[Method]">
+									<option value="rtpRtsp" selected="selected">TCP</option>
+									<option value="rtpUni">UDP</option>
+									<option value="rtpMulti">UDP Multicast</option>
+									<option value="rtpRtspHttp">HTTP Tunnel</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Options##$@@$##</td>
+							<td>
+								<input type="text" name="ffmpeg-newMonitor[Options]" id="ffmpeg-newMonitor[Options]" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##DecoderHWAccelName##$@@$##</td>
+							<td>
+								<input type="text" name="ffmpeg-newMonitor[DecoderHWAccelName]" id="ffmpeg-newMonitor[DecoderHWAccelName]" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##DecoderHWAccelDevice##$@@$##</td>
+							<td>
+								<input type="text" name="ffmpeg-newMonitor[DecoderHWAccelDevice]" id="ffmpeg-newMonitor[DecoderHWAccelDevice]" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Target colorspace##$@@$##</td>
+							<td>
+								<select name="ffmpeg-newMonitor[Colours]" id="ffmpeg-newMonitor[Colours]">
+									<option value="1">8 bit greyscale</option>
+									<option value="3">24 bit colour</option>
+									<option value="4" selected="selected">32 bit colour</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Capture Resolution (pixels)##$@@$##</td>
+							<td>
+					            <input type="number" style="width:60px;" name="ffmpeg-newMonitor[Width]" id="ffmpeg-newMonitor[Width]" value="1920" min="1">
+					            <input type="number" style="width:60px;" name="ffmpeg-newMonitor[Height]" id="ffmpeg-newMonitor[Height]" value="1080" min="1">
+								<select name="ffmpeg-dimensions_select" id="ffmpeg-dimensions_select" style="width:auto;">
+									<option value="">Custom</option>
+									<option value="176x120">176x120 QCIF</option>
+									<option value="176x144">176x14</option>
+									<option value="320x240">320x240</option>
+									<option value="320x200">320x200</option>
+									<option value="352x240">352x240 CIF</option>
+									<option value="640x480">640x480</option>
+									<option value="640x400">640x400</option>
+									<option value="704x240">704x240 2CIF</option>
+									<option value="704x480">704x480 4CIF</option>
+									<option value="720x480">720x480 D1</option>
+									<option value="1280x720">1280x720 720p</option>
+									<option value="1280x800">1280x800</option>
+									<option value="1280x960">1280x960 960p</option>
+									<option value="1280x1024">1280x1024 1MP</option>
+									<option value="1600x1200">1600x1200 2MP</option>
+									<option value="1920x1080" selected="selected">1920x1080 1080p</option>
+									<option value="2048x1536">2048x1536 3MP</option>
+									<option value="2592x1944">2592x1944 5MP</option>
+									<option value="3840x2160">3840x2160 4K UHD</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Preserve Aspect Ratio##$@@$##</td>
+							<td>
+								<input type="checkbox" name="ffmpeg-preserveAspectRatio" id="ffmpeg-preserveAspectRatio" value="1">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Orientation##$@@$##</td>
+							<td>
+								<select name="ffmpeg-newMonitor[Orientation]" id="ffmpeg-newMonitor[Orientation]">
+									<option value="ROTATE_0" selected="selected">Normal</option>
+									<option value="ROTATE_90">Rotate Right</option>
+									<option value="ROTATE_180">Inverted</option>
+									<option value="ROTATE_270">Rotate Left</option>
+									<option value="FLIP_HORI">Flipped Horizontally</option>
+									<option value="FLIP_VERT">Flipped Vertically</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Deinterlacing##$@@$##</td>
+							<td>
+								<select name="ffmpeg-newMonitor[Deinterlacing]" id="ffmpeg-newMonitor[Deinterlacing]">
+									<option value="0" selected="selected">Disabled</option>
+									<option value="7684">Four field motion adaptive - Soft</option>
+									<option value="5124">Four field motion adaptive - Medium</option>
+									<option value="2564">Four field motion adaptive - Hard</option>
+									<option value="1">Discard</option>
+									<option value="2">Linear</option>
+									<option value="3">Blend</option>
+									<option value="517">Blend (25%)</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					<!--对应General选项卡中Source Type为Libvlc的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-libvlc-source" ref="monitor-config-content-ul-source">
+						<tr>
+							<td>##$@@$##Source Path##$@@$##</td>
+							<td>
+								<input type="text" name="libvlc-newMonitor[Path]" id="libvlc-newMonitor[Path]" />
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Method##$@@$##</td>
+							<td>
+								<select name="libvlc-newMonitor[Method]" id="libvlc-newMonitor[Method]">
+									<option value="rtpRtsp" selected="selected">TCP</option>
+									<option value="rtpUni">UDP</option>
+									<option value="rtpMulti">UDP Multicast</option>
+									<option value="rtpRtspHttp">HTTP Tunnel</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Options##$@@$##</td>
+							<td>
+								<input type="text" name="libvlc-newMonitor[Options]" id="libvlc-newMonitor[Options]" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Target colorspace##$@@$##</td>
+							<td>
+								<select name="libvlc-newMonitor[Colours]" id="libvlc-newMonitor[Colours]">
+									<option value="1">8 bit greyscale</option>
+									<option value="3">24 bit colour</option>
+									<option value="4" selected="selected">32 bit colour</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Capture Resolution (pixels)##$@@$##</td>
+							<td>
+					            <input type="number" style="width:60px;" name="libvlc-newMonitor[Width]" id="libvlc-newMonitor[Width]" value="1920" min="1">
+					            <input type="number" style="width:60px;" name="libvlc-newMonitor[Height]" id="libvlc-newMonitor[Height]" value="1080" min="1">
+								<select name="libvlc-dimensions_select" id="libvlc-dimensions_select" style="width:auto;">
+									<option value="">Custom</option>
+									<option value="176x120">176x120 QCIF</option>
+									<option value="176x144">176x14</option>
+									<option value="320x240">320x240</option>
+									<option value="320x200">320x200</option>
+									<option value="352x240">352x240 CIF</option>
+									<option value="640x480">640x480</option>
+									<option value="640x400">640x400</option>
+									<option value="704x240">704x240 2CIF</option>
+									<option value="704x480">704x480 4CIF</option>
+									<option value="720x480">720x480 D1</option>
+									<option value="1280x720">1280x720 720p</option>
+									<option value="1280x800">1280x800</option>
+									<option value="1280x960">1280x960 960p</option>
+									<option value="1280x1024">1280x1024 1MP</option>
+									<option value="1600x1200">1600x1200 2MP</option>
+									<option value="1920x1080" selected="selected">1920x1080 1080p</option>
+									<option value="2048x1536">2048x1536 3MP</option>
+									<option value="2592x1944">2592x1944 5MP</option>
+									<option value="3840x2160">3840x2160 4K UHD</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Preserve Aspect Ratio##$@@$##</td>
+							<td>
+								<input type="checkbox" name="libvlc-preserveAspectRatio" id="libvlc-preserveAspectRatio" value="1" />
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Orientation##$@@$##</td>
+							<td>
+								<select name="libvlc-newMonitor[Orientation]" id="libvlc-newMonitor[Orientation]">
+									<option value="ROTATE_0" selected="selected">Normal</option>
+									<option value="ROTATE_90">Rotate Right</option>
+									<option value="ROTATE_180">Inverted</option>
+									<option value="ROTATE_270">Rotate Left</option>
+									<option value="FLIP_HORI">Flipped Horizontally</option>
+									<option value="FLIP_VERT">Flipped Vertically</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Deinterlacing##$@@$##</td>
+							<td>
+								<select name="libvlc-newMonitor[Deinterlacing]" id="libvlc-newMonitor[Deinterlacing]">
+									<option value="0" selected="selected">Disabled</option>
+									<option value="7684">Four field motion adaptive - Soft</option>
+									<option value="5124">Four field motion adaptive - Medium</option>
+									<option value="2564">Four field motion adaptive - Hard</option>
+									<option value="1">Discard</option>
+									<option value="2">Linear</option>
+									<option value="3">Blend</option>
+									<option value="517">Blend (25%)</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					<!--对应General选项卡中Source Type为cURL的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-cURL-source" ref="monitor-config-content-ul-source">
+						<tr>
+							<td>##$@@$##URL##$@@$##</td>
+							<td>
+								<input type="text" name="cUrl-newMonitor[Path]" id="cUrl-newMonitor[Path]" value="rtsp://admin:fzj19981018@192.168.0.230/onvif">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Username##$@@$##</td>
+							<td>
+								<input type="text" name="cUrl-newMonitor[User]" id="cUrl-newMonitor[User]" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Password##$@@$##</td>
+							<td>
+								<input type="password" name="cUrl-newMonitor[Pass]" id="cUrl-newMonitor[Pass]" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Target colorspace##$@@$##</td>
+							<td>
+								<select name="cUrl-newMonitor[Colours]" id="cUrl-newMonitor[Colours]">
+									<option value="1">8 bit greyscale</option>
+									<option value="3">24 bit colour</option>
+									<option value="4" selected="selected">32 bit colour</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Capture Resolution (pixels)##$@@$##</td>
+							<td>
+					            <input type="number" style="width:60px;" name="cUrl-newMonitor[Width]" id="cUrl-newMonitor[Width]" value="1920" min="1">
+					            <input type="number" style="width:60px;" name="cUrl-newMonitor[Height]" id="cUrl-newMonitor[Height]" value="1080" min="1">
+								<select name="cUrl-dimensions_select" id="cUrl-dimensions_select" style="width:auto;">
+									<option value="">Custom</option>
+									<option value="176x120">176x120 QCIF</option>
+									<option value="176x144">176x14</option>
+									<option value="320x240">320x240</option>
+									<option value="320x200">320x200</option>
+									<option value="352x240">352x240 CIF</option>
+									<option value="640x480">640x480</option>
+									<option value="640x400">640x400</option>
+									<option value="704x240">704x240 2CIF</option>
+									<option value="704x480">704x480 4CIF</option>
+									<option value="720x480">720x480 D1</option>
+									<option value="1280x720">1280x720 720p</option>
+									<option value="1280x800">1280x800</option>
+									<option value="1280x960">1280x960 960p</option>
+									<option value="1280x1024">1280x1024 1MP</option>
+									<option value="1600x1200">1600x1200 2MP</option>
+									<option value="1920x1080" selected="selected">1920x1080 1080p</option>
+									<option value="2048x1536">2048x1536 3MP</option>
+									<option value="2592x1944">2592x1944 5MP</option>
+									<option value="3840x2160">3840x2160 4K UHD</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Preserve Aspect Ratio##$@@$##</td>
+							<td>
+								<input type="checkbox" name="cUrl-preserveAspectRatio" id="cUrl-preserveAspectRatio" value="1">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Orientation##$@@$##</td>
+							<td>
+								<select name="cUrl-newMonitor[Orientation]" id="cUrl-newMonitor[Orientation]">
+									<option value="ROTATE_0" selected="selected">Normal</option>
+									<option value="ROTATE_90">Rotate Right</option>
+									<option value="ROTATE_180">Inverted</option>
+									<option value="ROTATE_270">Rotate Left</option>
+									<option value="FLIP_HORI">Flipped Horizontally</option>
+									<option value="FLIP_VERT">Flipped Vertically</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Deinterlacing##$@@$##</td>
+							<td>
+								<select name="cUrl-newMonitor[Deinterlacing]" id="cUrl-newMonitor[Deinterlacing]">
+									<option value="0" selected="selected">Disabled</option>
+									<option value="7684">Four field motion adaptive - Soft</option>
+									<option value="5124">Four field motion adaptive - Medium</option>
+									<option value="2564">Four field motion adaptive - Hard</option>
+									<option value="1">Discard</option>
+									<option value="2">Linear</option>
+									<option value="3">Blend</option>
+									<option value="517">Blend (25%)</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					<!--对应General选项卡中Source Type为WebSite的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-webSite-source" ref="monitor-config-content-ul-source">
+						<tr>
+							<td>##$@@$##Website URL##$@@$##</td>
+							<td>
+								<input type="text" name="webSite-newMonitor[Path]" id="webSite-newMonitor[Path]" value="rtsp://admin:fzj19981018@192.168.0.230/onvif">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Width (pixels)##$@@$##</td>
+							<td>
+								<input type="number" name="webSite-newMonitor[Width]" id="webSite-newMonitor[Width]" value="1920" min="1">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Height (pixels)##$@@$##</td>
+							<td>
+								<input type="number" name="webSite-newMonitor[Height]" id="webSite-newMonitor[Height]" value="1080" min="1">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Web Site Refresh (Optional)##$@@$##</td>
+							<td>
+								<input type="number" name="webSite-newMonitor[Refresh]" id="webSite-newMonitor[Refresh]" value="" min="1">
+							</td>
+						</tr>
+					</table>
+					<!--对应General选项卡中Source Type为NVSocket的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-nVSocket-source" ref="monitor-config-content-ul-source">
+						<tr>
+							<td>##$@@$##NVSocket-HostName##$@@$##</td>
+							<td>
+								<input type="text" name="nVSocket-newMonitor[Host]" id="nVSocket-newMonitor[Host]" value="" size="36">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##NVSocket-Port##$@@$##</td>
+							<td>
+								<input type="number" name="nVSocket-newMonitor[Port]" id="nVSocket-newMonitor[Port]" value="" size="6">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##NVSocket-Path##$@@$##</td>
+							<td>
+								<input type="hidden" name="nVSocket-newMonitor[Path]" id="nVSocket-newMonitor[Path]" value="rtsp://admin:fzj19981018@192.168.0.230/onvif" size="36">
+							</td>
+						</tr>
+						<input type="hidden" name="nVSocket-newMonitor[User]" id="nVSocket-newMonitor[User]" value="">
+						<input type="hidden" name="nVSocket-newMonitor[Pass]" id="nVSocket-newMonitor[Pass]" value="">
+						<input type="hidden" name="nVSocket-newMonitor[Options]" id="nVSocket-newMonitor[Options]" value="">
+						<tr>
+							<td>##$@@$##Target colorspace##$@@$##</td>
+							<td>
+								<select name="nVSocket-newMonitor[Colours]" id="nVSocket-newMonitor[Colours]">
+									<option value="1">8 bit greyscale</option>
+									<option value="3">24 bit colour</option>
+									<option value="4" selected="selected">32 bit colour</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Capture Width (pixels)##$@@$##</td>
+							<td>
+								<input type="number" name="nVSocket-newMonitor[Width]" id="nVSocket-newMonitor[Width]" value="1920" size="4" />
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Capture Height (pixels)##$@@$##</td>
+							<td>
+								<input type="number" name="nVSocket-newMonitor[Height]" id="nVSocket-newMonitor[Height]" value="1080" size="4" />
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Preserve Aspect Ratio##$@@$##</td>
+							<td>
+								<input type="checkbox" name="nVSocket-preserveAspectRatio" id="nVSocket-preserveAspectRatio" value="1">
+							</td>
+						</tr>
+						<input type="hidden" name="nVSocket-newMonitor[Deinterlacing]" id="nVSocket-newMonitor[Deinterlacing]" value="0">
+						<input type="hidden" name="nVSocket-newMonitor[RTSPDescribe]" id="nVSocket-newMonitor[Deinterlacing]" value="0">
+						<tr>
+							<td>##$@@$##Deinterlacing##$@@$##</td>
+							<td>
+								<select name="nVSocket-newMonitor[Deinterlacing]" id="nVSocket-newMonitor[Deinterlacing]">
+									<option value="0" selected="selected">Disabled</option>
+									<option value="7684">Four field motion adaptive - Soft</option>
+									<option value="5124">Four field motion adaptive - Medium</option>
+									<option value="2564">Four field motion adaptive - Hard</option>
+									<option value="1">Discard</option>
+									<option value="2">Linear</option>
+									<option value="3">Blend</option>
+									<option value="517">Blend (25%)</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					
+
+					<!--点击storage选项卡出现的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-storage" ref="monitor-config-content-ul-storage">
+						<tr>
+							<td width="50%">##$@@$##Storage Area##$@@$##</td>
+							<td>
+								<select name="newMonitor[StorageId]" id="newMonitor[StorageId]">
+									<option value="0" selected="selected">Default</option>
+									<option value="1">Default</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Save JPEGs##$@@$##</td>
+							<td>
+								<select name="newMonitor[SaveJPEGs]" id="newMonitor[SaveJPEGs]">
+									<option value="0">Disabled</option>
+									<option value="1">Frames only</option>
+									<option value="2">Analysis images only (if available)</option>
+									<option value="3" selected="selected">Frames + Analysis images (if available)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Video Writer##$@@$##</td>
+							<td>
+								<select name="newMonitor[VideoWriter]" id="newMonitor[VideoWriter]">
+									<option value="0" selected="selected">Disabled</option>
+									<option value="1">X264 Encode</option>
+									<option value="2" disabled="disabled">H264 Camera Passthrough - only for FFMPEG</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Optional Encoder Parameters##$@@$##(?)</td>
+							<td>
+								<textarea name="newMonitor[EncoderParameters]" id="newMonitor[EncoderParameters]" rows="4">
+									# Lines beginning with # are a comment
+									# For changing quality, use the crf option
+									# 1 is best, 51 is worst quality
+									#crf=23
+								</textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Whether to store the audio stream when saving an event.##$@@$##</td>
+							<td>
+								<input type="checkbox" name="newMonitor[RecordAudio]" id="newMonitor[RecordAudio]" value="1">
+								<span id="newMonitor[RecordAudio]Description" class="hide">Audio recording only available with FFMPEG using H264 Passthrough</span>
+							</td>
+						</tr>
+					</table>
+
+					<!--点击timestamp选项卡出现的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-timestamp" ref="monitor-config-content-ul-timestamp">
+						<tr>
+							<td width="50%">##$@@$##Timestamp Label Format##$@@$##</td>
+							<td>
+								<input type="text" name="newMonitor[LabelFormat]" id="newMonitor[LabelFormat]" value="%N - %d/%m/%y %H:%M:%S">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Timestamp Label X##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[LabelX]" id="newMonitor[LabelX]" value="0" min="0">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Timestamp Label Y##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[LabelY]" id="newMonitor[LabelY]" value="0" min="0">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Font Size##$@@$##</td>
+							<td>
+								<select name="newMonitor[LabelSize]" id="newMonitor[LabelSize]">
+									<option value="1" selected="selected">Default</option>
+									<option value="2">Large</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+
+					<!--点击buffers选项卡出现的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-buffers" ref="monitor-config-content-ul-buffers">
+						<tr>
+							<td width="50%">##$@@$##Image Buffer Size (frames)##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[ImageBufferCount]" id="newMonitor[ImageBufferCount]" value="20" min="1">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Warmup Frames##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[WarmupCount]" id="newMonitor[WarmupCount]" value="0" min="0">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Pre Event Image Count##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[PreEventCount]" id="newMonitor[PreEventCount]" value="5" min="0">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Post Event Image Count##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[PostEventCount]" id="newMonitor[PostEventCount]" value="5" min="0">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Stream Replay Image Buffer##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[StreamReplayBuffer]" id="newMonitor[StreamReplayBuffer]" value="0" min="0">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Alarm Frame Count##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[AlarmFrameCount]" id="newMonitor[AlarmFrameCount]" value="1" min="1">
+							</td>
+						</tr>
+					</table>
+
+					<!--点击control选项卡出现的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-control" ref="monitor-config-content-ul-control">
+						<tr>
+							<td width="50%">##$@@$##Controllable##$@@$##</td>
+							<td>
+								<input type="checkbox" name="newMonitor[Controllable]" id="newMonitor[Controllable]" value="1">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Control Type##$@@$##</td>
+							<td>
+								<select name="newMonitor[ControlId]" id="newMonitor[ControlId]">
+									<option value="" selected="selected">None</option>
+									<option value="17">3S Domo N5071</option>
+									<option value="7">AirLink SkyIPCam 7xx</option>
+									<option value="41">Amcrest HTTP API</option>
+									<option value="4">Axis API v2</option>
+									<option value="33">D-LINK DCS-3415</option>
+									<option value="34">D-Link DCS-5020L</option>
+									<option value="39">Dahua</option>
+									<option value="36">Dericam P2</option>
+									<option value="29">Floureon 1080P</option>
+									<option value="19">Foscam 9831W</option>
+									<option value="11">Foscam FI8608W</option>
+									<option value="10">Foscam FI8620</option>
+									<option value="12">Foscam FI8908W</option>
+									<option value="20">Foscam FI8918W</option>
+									<option value="13">Foscam FI9821W</option>
+									<option value="40">FOSCAMR2C</option>
+									<option value="27">HikVision</option>
+									<option value="35">IOS Camera</option>
+									<option value="23">IPCC 7210W</option>
+									<option value="26">Keekoon</option>
+									<option value="14">Loftek Sentinel</option>
+									<option value="28">Maginon Supra IPC</option>
+									<option value="25">Netcat ONVIF</option>
+									<option value="6">Neu-Fusion NCS370</option>
+									<option value="18">ONVIF Camera</option>
+									<option value="5">Panasonic IP</option>
+									<option value="8">Pelco-D</option>
+									<option value="1">Pelco-D</option>
+									<option value="9">Pelco-P</option>
+									<option value="2">Pelco-P</option>
+									<option value="38">PSIA</option>
+									<option value="31">Reolink RLC-411</option>
+									<option value="32">Reolink RLC-420</option>
+									<option value="30">Reolink RLC-423</option>
+									<option value="3">Sony VISCA</option>
+									<option value="21">SunEyes SP-P1802SWPTZ</option>
+									<option value="15">Toshiba IK-WB11A</option>
+									<option value="37">Trendnet</option>
+									<option value="24">Vivotek ePTZ</option>
+									<option value="22">Wanscam HW0025</option>
+									<option value="16">WanscamPT</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Control Device##$@@$##</td>
+							<td>
+								<input type="text" name="newMonitor[ControlDevice]" id="newMonitor[ControlDevice]" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Control Address##$@@$##</td>
+							<td>
+								<input type="text" name="newMonitor[ControlAddress]" id="newMonitor[ControlAddress]" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Auto Stop Timeout##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[AutoStopTimeout]" id="newMonitor[AutoStopTimeout]" value="" min="0" step="any">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Track Motion##$@@$##</td>
+							<td>
+								<input type="checkbox" name="newMonitor[TrackMotion]" id="newMonitor[TrackMotion]" value="1">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Track Delay##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[TrackDelay]" id="newMonitor[TrackDelay]" value="" min="0" step="any">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Return Location##$@@$##</td>
+							<td>
+								<select name="newMonitor[ReturnLocation]" id="newMonitor[ReturnLocation]">
+									<option value="-1" selected="selected">None</option>
+									<option value="0">Home</option>
+									<option value="1">Preset 1</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Return Delay##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[ReturnDelay]" id="newMonitor[ReturnDelay]" value="" min="0" step="any">
+							</td>
+						</tr>
+					</table>
+
+					<!--点击misc选项卡出现的内容-->
+					<table class="monitor-config-content-table hide" id="monitor-config-content-table-misc" ref="monitor-config-content-ul-misc">
+						<tr>
+							<td width="50%">##$@@$##Event Prefix##$@@$##</td>
+							<td>
+								<input type="text" name="newMonitor[EventPrefix]" id="newMonitor[EventPrefix]" value="Event-">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Section length##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[SectionLength]" id="newMonitor[SectionLength]" value="600" min="0">
+								##$@@$##seconds##$@@$##
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##MinSectionlength##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[MinSectionLength]" id="newMonitor[MinSectionLength]" value="10" min="0">
+								##$@@$##seconds##$@@$##
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Frame Skip##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[FrameSkip]" id="newMonitor[FrameSkip]" value="0" min="0">
+								##$@@$##frames##$@@$##
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Motion Frame Skip##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[MotionFrameSkip]" id="newMonitor[MotionFrameSkip]" value="0" min="0">
+								##$@@$##frames##$@@$##
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Analysis Update Delay##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[AnalysisUpdateDelay]" id="newMonitor[AnalysisUpdateDelay]" value="0" min="0">
+								##$@@$##seconds##$@@$##
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##FPS Report Interval##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[FPSReportInterval]" id="newMonitor[FPSReportInterval]" value="100" min="0">
+								##$@@$##frames##$@@$##
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Default Rate##$@@$##</td>
+							<td>
+								<select name="newMonitor[DefaultRate]" id="newMonitor[DefaultRate]">
+									<option value="-5000">-50x</option>
+									<option value="-2500">-25x</option>
+									<option value="-1000">-10x</option>
+									<option value="-500">-5x</option>
+									<option value="-200">-2x</option>
+									<option value="-100">-1x</option>
+									<option value="-50">-1/2x</option>
+									<option value="-25">-1/4x</option>
+									<option value="0">Stop</option>
+									<option value="25">1/4x</option>
+									<option value="50">1/2x</option>
+									<option value="100" selected="selected">1x</option>
+									<option value="200">2x</option>
+									<option value="500">5x</option>
+									<option value="1000">10x</option>
+									<option value="2500">25x</option>
+									<option value="5000">50x</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Default Scale##$@@$##</td>
+							<td>
+								<select name="newMonitor[DefaultScale]" id="newMonitor[DefaultScale]">
+									<option value="0">Scale to Fit</option>
+									<option value="400">4x</option>
+									<option value="300">3x</option>
+									<option value="200">2x</option>
+									<option value="150">1.5x</option>
+									<option value="100" selected="selected">Actual</option>
+									<option value="75">3/4x</option>
+									<option value="50">1/2x</option>
+									<option value="33">1/3x</option>
+									<option value="25">1/4x</option>
+									<option value="12.5">1/8x</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Default Method For Live View##$@@$##</td>
+							<td>
+								<select name="newMonitor[DefaultCodec]" id="newMonitor[DefaultCodec]">
+									<option value="auto" selected="selected">Auto</option>
+									<option value="MP4">MP4</option>
+									<option value="MJPEG">MJPEG</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Signal Check Points##$@@$##</td>
+							<td>
+								<input type="number" name="newMonitor[SignalCheckPoints]" id="newMonitor[SignalCheckPoints]" value="0" min="0">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Signal Check Colour##$@@$##</td>
+							<td>
+					            <input type="color" name="newMonitor[SignalCheckColour]" id="newMonitor[SignalCheckColour]" value="#0000BE">
+								<span id="SignalCheckSwatch" class="swatch" style="background-color: #0000BE;">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				          	</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Web Colour##$@@$##</td>
+							<td>
+								<input type="color" name="newMonitor[WebColour]" id="newMonitor[WebColour]" value="#a572e7">
+					            <span id="WebSwatch" class="swatch" style="background-color: rgb(84, 60, 166);">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					            <i class="material-icons" id="randomColorIcon">sync</i>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##Embed EXIF data into image##$@@$##(?)</td>
+							<td>
+								<input type="checkbox" name="newMonitor[Exif]" id="newMonitor[Exif]" value="1">
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="monitor-config-content-bottom">
+					<button onclick="$('#popup_monitor').hide()">##$@@$##Cancel##$@@$##</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="mointer-saveBtn">##$@@$##Save##$@@$##</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!--删除确认弹框-->
+	<div class="popup-container" id="popup_delete_confirm">
+		<div class="delete-confirm-container">
+			<div class="popup-title-bar">
+				<div class="popup-title">删除确认</div>
+				<div class="popup-close" id="popup_delete_confirm_close"></div>
+			</div>
+			
+			<div class="delete-confirm-inner">
+				<div class="delete-confirm-text" id="dc_text">确定要删除吗</div>
+				
+				<div class="delete-confirm-btn-bar">
+					<button class="zm-btn-without-icon" id="dc_btn_confirm">确认</button>
+					<button class="zm-btn-without-icon" id="dc_btn_cancel">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+			
+	<!--通知框，一般在做某些保存或编辑操作后显示并将回调结果显示出来，包含遮罩-->
+	<div class="popup-container" id="popup_notice">
+		<div class="popup_notice_container" onclick="stopPropagation()">
+			<span id="popup_notice_text">test</span>
+		</div>
+	</div>
+	
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="js/laydate.js"></script>
+	<script src="js/pagination.min.js"></script>
+	<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="js/swiper.min.js"></script>
+	<script src="js/Translation.js"></script>
+	<script src="js/util.js"></script>
+
+	<script type="text/javascript">
+		//如果access_token不存在且refresh_token不存在则返回登录页
+		if(getCookie("access_token")=="" && getCookie("refresh_token")==""){
+			window.location.href="login.html"+location.search;
+		}
+	</script>
+	
+	<script src="js/monitor.js"></script>
+	<script src="js/event.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/log.js"></script>
+	<script src="js/index.js"></script>
+</body>
+</html>
+
+
+

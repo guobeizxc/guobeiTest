@@ -1,0 +1,173 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>回放</title>
+		<link rel="stylesheet" href="./css/event.css">
+	</head>
+	<body> -->
+		
+		<div class="wrapper">
+			<div class="wrapper-record" id="wrapper_record">
+				<div class="record-header-container">
+					<span class="record-header-item">
+						<label for="record_sel_monitor">监视器</label>
+						<select id="record_sel_monitor">
+							<option value="">全部</option>
+						</select>
+					</span>
+					
+					<div class="record-setting-container">
+						<span class="record-setting-item hide" id="setting_item_codec">
+							<label for="record_sel_codec">编码</label>
+							<select class="select-codec" id="record_sel_codec">
+								<option value="MP4">MP4</option>
+								<option value="MJPEG">MJPEG</option>
+							</select>
+						</span>
+						
+						<span class="record-setting-item">
+							<label for="record_sel_ratio">比例</label>
+							<select id="record_sel_ratio">
+								<option value="16/9">16/9</option>
+								<option value="4/3">4:3</option>
+								<option value="1/1">1:1</option>
+							</select>
+						</span>
+						
+						<span class="record-setting-item">
+							<label for="record_sel_scale">清晰度</label>
+							<select class="select-scale" id="record_sel_scale">
+								<option value="60">标清</option>
+								<option value="80">超清</option>
+								<option value="100">高清</option>
+							</select>
+						</span>
+						
+						<span class="record-setting-item">
+							<label for="record_sel_size">尺寸</label>
+							<select class="select-size" id="record_sel_size">
+								<option value="0" selected="selected">显示全部</option>
+								<option value="400">4x</option>
+								<option value="300">3x</option>
+								<option value="200">2x</option>
+								<option value="150">1.5x</option>
+								<option value="100">实际尺寸</option>
+								<option value="75">3/4x</option>
+								<option value="50">1/2x</option>
+								<option value="33">1/3x</option>
+								<option value="25">1/4x</option>
+								<option value="12.5">1/8x</option>
+							</select>
+						</span>
+						<span class="record-setting-item">
+							<button id="event-refreshBtn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;##$@@$##刷新##$@@$##</button>
+						</span>
+					</div>
+				</div>
+				
+				<div class="record-main-container">
+					
+					<div class="monitor-left-view" id="monitor_left_view">
+						<div class="monitor-thumb-record-container hide" id="monitor_thumb_record_container">
+							
+							<!-- <div class="monitor-thumb-record" data-ref="0">
+								<div class="monitor-container">
+									<img class="loading-icon" src="./images/ajax-loader.gif"> 
+									<div class="screen-container flex-center">
+										<img class="screen-mjpeg" id="screen_mjpeg_0" data-ref="0" src="./images/1920x1080.jpg" />
+									</div>
+	
+									<div class="name-container hide">hik-01</div>
+									
+									<div class="control-panel-container hide">
+										<div class="control-panel">
+											<button class="zm-btn-media zm-btn-media-pause inactive" id="zm_btn_media_pause_record_0" data-ref="0"></button>
+											<button class="zm-btn-media zm-btn-media-play inactive" id="zm_btn_media_play_record_0" data-ref="0"></button>
+											<button class="zm-btn-media zm-btn-media-zoomout inactive" id="zm_btn_media_zoomout_record_0" data-ref="0"></button>
+										</div>
+										<div class="control-panel-status" id="cp_status_record_0">模式：回放</div>
+									</div>
+									
+									<div class="progress-bar" id="progress_bar_0">
+										<div class="progress-thumb" id="progress_thumb_0"></div>
+									</div>
+								</div>
+							</div> -->
+							
+						</div>
+						
+						<div class="monitor-video-player-container hide" id="monitor_video_player_container">
+							
+							<!-- <div class="video-player-record">
+								<video id="video_record" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay width="100%" height="100%" data-setup='{}'>
+									<source src="/zm/index.php?eid=3&view=view_video&auth=f9e645847cb76039341f9966189e22c0" type='video/mp4' />
+								</video>
+							</div> -->
+							
+						</div>
+					</div>
+					
+					<div class="record-notice-empty hide" id="record_notice_empty">
+						<img src="./images/icon_picture.png">
+						<div class="record-notice-text">
+							<span>当前选择日期没有回放记录</span>
+						</div>
+					</div>
+					
+					<div class="record-list-container unfolded" id="record_list_container">
+						<div class="record-list-header-container">
+							<select class="select-year" id="record_sel_year">
+								<option value="2020">2020</option>
+							</select>
+							<select id="record_sel_month">
+								<option value="0">1</option>
+							</select>
+							<select id="record_sel_date">
+								<option value="1">1</option>
+							</select>
+						</div>
+						
+						<div class="record-list-main">
+							<table class="unas_table_title">
+								<tr>
+									<th class="td_record_name">名称</th>
+									<th class="td_record_length">时长</th>
+									<th class="td_record_operation">操作</th>
+								</tr>
+							</table>
+			
+							<div class="unas_table_abs" id="monitor_table_abs">
+								<div class="unas_scroll_container" id="record_table_scroll_container">
+									<table class="unas_record_content" id="record_table">
+										<!-- <tr class="tr_record" id="tr_record_0" data-ref="0">
+											<td class="td_record_name"></td>
+											<td class="td_record_length">秒</td>
+											<td class="td_record_operation">
+												<div class="td_icon td_record_delete"></div>
+											</td>
+										</tr> -->
+									</table>
+								</div>
+							</div>
+							
+							<div class="record-pagination" id="record_pagination"></div>
+						</div>
+						
+						<div class="btn-handler" id="btn_handler">
+							<img class="icon-unfold" src="./images/icon_Unfold.png">
+							<img class="icon-retract" src="./images/icon_Retract_normal.png">
+						</div>
+					</div>
+				
+				</div>
+			</div>
+			
+			<div class="loading-container hide" id="loading_event">
+				<img class="loading-icon" src="./images/ajax-loader.gif"> 
+			</div>
+		</div>
+		
+		<!-- <script type='text/javascript' src="./js/event.js"></script>
+	</body>
+<html> -->

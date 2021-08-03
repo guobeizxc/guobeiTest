@@ -1,0 +1,435 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>监视器</title>
+		<link rel="stylesheet" href="./css/monitor.css">
+	</head>
+	<body> -->
+		
+		<div class="wrapper">
+			<div class="wrapper-monitor hide" id="wrapper_monitor">
+				<div class="monitor-header-container">
+					<div class="monitor-search-container flex-vert-center">
+						<div class="monitor-btn-search" id="monitor_btn_search">
+							<img src="./images/icon_search.png">
+						</div>
+						<div class="monitor-ipt-container">
+							<input type="text" class="monitor-ipt-search" id="monitor_ipt_search" autocomplete="off" placeholder="输入关键词进行搜索">
+						</div>
+					</div>
+					
+					<button class="zm-btn-with-icon" id="monitor_btn_add">
+						<div class="flex-center">
+							<span class="zm-btn-icon zm-btn-icon-add"></span>
+							<span>添加监视器</span>
+						</div>
+					</button>
+					
+					<button class="zm-btn-with-icon" id="monitor_btn_prob">
+						<div class="flex-center">
+							<span class="zm-btn-icon zm-btn-icon-prob"></span>
+							<span>局域网搜索</span>
+						</div>
+					</button>
+					
+					<div class="monitor-view-model-container">
+						<button class="zm-btn-vm active" data-ref="2">
+							<div class="flex-center">
+								<span class="zm-btn-vm-icon zm-btn-vm-icon-2"></span>
+							</div>
+						</button>
+						<button class="zm-btn-vm" data-ref="3">
+							<div class="flex-center">
+								<span class="zm-btn-vm-icon zm-btn-vm-icon-3"></span>
+							</div>
+						</button>
+						<button class="zm-btn-vm margin-right-free" data-ref="4">
+							<div class="flex-center">
+								<span class="zm-btn-vm-icon zm-btn-vm-icon-4"></span>
+							</div>
+						</button>
+					</div>
+					
+					<div class="monitor-stream-setting-container hide">
+						<span class="monitor-ss-item">
+							<label for="monitor_sel_ratio">比例</label>
+							<select id="monitor_sel_ratio">
+								<option value="16/9">16/9</option>
+								<option value="4/3">4:3</option>
+								<option value="1/1">1:1</option>
+							</select>
+						</span>
+						
+						<span class="monitor-ss-item">
+							<label for="monitor_sel_scale">清晰度</label>
+							<select class="select-scale" id="monitor_sel_scale">
+								<option value="60">标清</option>
+								<option value="80">超清</option>
+								<option value="100">高清</option>
+							</select>
+						</span>
+						
+						<span class="monitor-ss-item">
+							<label for="monitor_sel_size">尺寸</label>
+							<select class="select-size" id="monitor_sel_size">
+								<option value="0" selected="selected">显示全部</option>
+								<option value="400">4x</option>
+								<option value="300">3x</option>
+								<option value="200">2x</option>
+								<option value="150">1.5x</option>
+								<option value="100">实际尺寸</option>
+								<option value="75">3/4x</option>
+								<option value="50">1/2x</option>
+								<option value="33">1/3x</option>
+								<option value="25">1/4x</option>
+								<option value="12.5">1/8x</option>
+							</select>
+						</span>
+					</div>
+				</div>
+				
+				<div class="monitor-main-container">
+					
+					<div class="monitor-page-view hide" id="monitor_page_view">
+						<div class="monitor-list-scroll-container" id="monitor_list_scroll_container">
+							<div class="monitor-list" id="monitor_list">
+								
+								<!-- <div class="monitor-thumb monitor-thumb-page monitor-thumb-stuffed" id="monitor_thumb_page_0">
+									<div class="placeholder-container hide" data-ref="0">
+										<div class="rect"></div>
+										<div class="rect rect-vert"></div>
+									</div>
+									
+									<div class="monitor-container">
+										<img class="loading-icon" src="./images/ajax-loader.gif"> 
+										<div class="screen-container flex-center">
+											<img class="screen-mjpeg" data-ref="0" src="./images/1920x1080.jpg" />
+										</div>
+										
+										<div class="name-container hide">hik-01</div>
+										
+										<div class="control-container hide">
+											<div class="icon-control-list"></div>
+											<div class="control-list hide">
+												<div class="control-item control-item-edit" data-ref="0" id="control_item_edit_0">编辑</div>
+												<div class="control-item control-item-bigsize" data-ref="0" id="control_item_bigsize_0">放大</div>
+												<div class="control-item control-item-remove" data-ref="0" id="control_item_remove_0">删除</div>
+											</div>
+										</div>
+										<div class="control-panel-container hide">
+											<div class="control-panel">
+												<button class="zm-btn-media zm-btn-media-pause" id="zm_btn_media_pause_0" data-ref="0"></button>
+												<button class="zm-btn-media zm-btn-media-play inactive" id="zm_btn_media_play_0" data-ref="0"></button>
+												<button class="zm-btn-media zm-btn-media-zoomout inactive" id="zm_btn_media_zoomout_0" data-ref="0"></button>
+											</div>
+											<div class="control-panel-status" id="cp_status_0">状态：</div>
+										</div>
+									</div>
+								</div> -->
+								
+							</div>
+						</div>
+					</div>
+					
+					<div class="monitor-slider-view hide" id="monitor_slider_view">
+						<div class="monitor-thumb-bigsize-view" id="monitor_thumb_bigsize_view">
+							<div class="monitor-thumb-bigsize-container" id="monitor_thumb_bigsize_container">
+	
+								<!-- <div class="monitor-thumb monitor-thumb-bigsize">
+									<div class="monitor-container">
+										<img class="loading-icon" src="./images/ajax-loader.gif"> 
+										<div class="screen-container flex-center">
+											<img class="screen-mjpeg" data-ref="0" src="./images/1920x1080.jpg" />
+										</div>
+	
+										<div class="name-container hide">hik-01</div>
+	
+										<div class="control-container hide">
+											<div class="icon-control-list"></div>
+											<div class="control-list hide">
+												<div class="control-item control-item-edit" data-ref="0" id="control_item_edit_bigsize_0">编辑</div>
+												<div class="control-item control-item-back" data-ref="0" id="control_item_back_bigsize_0">返回</div>
+												<div class="control-item control-item-remove" data-ref="0" id="control_item_remove_bigsize_0">删除</div>
+											</div>
+										</div>
+										<div class="control-panel-container hide">
+											<div class="control-panel">
+												<button class="zm-btn-media zm-btn-media-pause" id="zm_btn_media_pause_bigsize_0" data-ref="0"></button>
+												<button class="zm-btn-media zm-btn-media-play inactive" id="zm_btn_media_play_bigsize_0" data-ref="0"></button>
+												<button class="zm-btn-media zm-btn-media-zoomout inactive" id="zm_btn_media_zoomout_bigsize_0" data-ref="0"></button>
+											</div>
+											<div class="control-panel-status" id="cp_status_bigsize_0">状态：</div>
+										</div>
+									</div>
+								</div> -->
+	
+							</div>
+						</div>
+
+						<div class="swiper-container swiper-container-monitor">
+						    <div class="swiper-wrapper" id="swiper_wrapper_monitor">
+						        
+						        <!-- <div class="swiper-slide monitor-swiper-slide" data-ref="0">
+						        	<div class="monitor-thumb monitor-thumb-slide">
+										<div class="monitor-container">
+											<img class="loading-icon" src="./images/ajax-loader.gif"> 
+											<div class="screen-container flex-center">
+												<img class="screen-mjpeg" src="./images/1920x1080.jpg" />
+											</div>
+											
+											<div class="name-container">hik-01</div>
+										</div>
+									</div>
+						        </div> -->
+						        
+						    </div>
+						    <div class="swiper-button-prev"></div>
+						    <div class="swiper-button-next"></div>
+						</div>
+					</div>
+					
+					<div class="monitor-notice-empty hide" id="monitor_notice_empty">
+						<img src="./images/icon_picture.png">
+						<div class="monitor-notice-text">
+							<span>还未添加监控器，点击上方</span>
+							<span class="strong">添加</span>
+							<span>按钮进行添加</span>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+			<!-- 局域网搜索 -->
+			<div class="popup-container" id="popup_monitor_prob">
+				<div class="monitor-prob-container">
+					<div class="popup-title-bar">
+						<div class="popup-title">局域网搜索</div>
+						<div class="popup-close" id="popup_monitor_prob_close"></div>
+					</div>
+					
+					<div class="monitor-prob-inner">
+						<div class="monitor-prob-header-container">
+							<button class="zm-btn-with-icon margin-left-free" id="monitor_prob_btn_reprob">
+								<div class="flex-center">
+									<span class="zm-btn-icon zm-btn-icon-reprob"></span>
+									<span>重新搜索</span>
+								</div>
+							</button>
+						</div>
+						
+						<div class="monitor-prob-main-container">
+							<div class="unas_table">
+								<table class="unas_table_title">
+									<tr>
+										<th class="td_monitor_name">监控器</th>
+										<th class="td_monitor_ip">IP</th>
+										<th class="td_monitor_protocol">协议</th>
+										<th class="td_monitor_version">版本号</th>
+										<th class="td_monitor_operation">操作</th>
+									</tr>
+								</table>
+				
+								<div class="unas_table_abs" id="monitor_table_abs">
+									<div class="unas_scroll_container" id="monitor_table_scroll_container">
+										<table class="unas_table_content" id="monitor_table">
+											<tr>
+												<td class="td_monitor_name"></td>
+												<td class="td_monitor_ip"></td>
+												<td class="td_monitor_protocol"></td>
+												<td class="td_monitor_version"></td>
+												<td class="td_monitor_operation">
+													<div class="td_icon td_icon_add_monitor"></div>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+							
+							<div class="monitor-prob-notice-empty hide" id="monitor_prob_notice_empty">
+								<div class="monitor-notice-text">没有搜索到监视器，请点击'添加按钮直接添加'</div>
+								<button class="zm-btn-with-icon" id="monitor_prob_btn_addprob">
+									<div class="flex-center">
+										<span class="zm-btn-icon zm-btn-icon-addprob"></span>
+										<span>添加</span>
+									</div>
+								</button>
+							</div>
+						</div>
+						
+						<div class="loading-container hide" id="loading_monitor_prob">
+							<img class="loading-icon" src="./images/ajax-loader.gif"> 
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 简单配置项 -->
+			<div class="popup-container" id="popup_monitor_simple">
+				<div class="monitor-simple-container">
+					<div class="popup-title-bar">
+						<div class="popup-title"><span id="popup_monitor_simple_title"></span></div>
+						<div class="popup-close" id="popup_monitor_simple_close"></div>
+					</div>
+					<!--<img class="loading-icon" src="./images/ajax-loader.gif"> -->
+					
+					<!--监视器的Id，若打开页面后该Id为空，则表示添加监视器，否则表示编辑监视器-->
+					<input type="hidden" id="simple-newMonitor[Id]" name="simple-newMonitor[Id]"/>
+
+					<input type="hidden" id="simple-newMonitor[Height]" name="simple-newMonitor[Height]"/>
+					<input type="hidden" id="simple-newMonitor[Width]" name="simple-newMonitor[Width]"/>
+					<input type="hidden" id="simple-newMonitor[MaxFPS]" name="simple-newMonitor[MaxFPS]"/>
+
+					<table class="monitor-config-content-table-simple" id="monitor-config-content-table-simple">
+						<tr>
+							<td width="30%">##$@@$##名称##$@@$##</td>
+							<td><input type="text" id="simple-newMonitor[Name]" name="simple-newMonitor[Name]" /></td>
+						</tr>
+						<tr>
+							<td>##$@@$##信号源类型##$@@$##</td>
+							<td>
+								<select id="simple-newMonitor[Type]" name="simple-newMonitor[Type]">
+									<option value="Local" selected="selected">##$@@$##本地##$@@$##</option>
+									<option value="Remote">##$@@$##远程##$@@$##</option>
+									<option value="File">##$@@$##文件##$@@$##</option>
+									<option value="Ffmpeg">##$@@$##Ffmpeg##$@@$##</option>
+									<option value="Libvlc">##$@@$##Libvlc##$@@$##</option>
+									<option value="cURL">##$@@$##cURL (HTTP(S) only)##$@@$##</option>
+									<option value="WebSite">##$@@$##Web Site##$@@$##</option>
+									<option value="NVSocket">##$@@$##NVSocket##$@@$##</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##远程协议##$@@$##</td>
+							<td>
+								<select id="simple-newMonitor[Protocol]" name="simple-newMonitor[Protocol]">
+									<option value="http">HTTP</option>
+									<option value="rtsp">RTSP</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##远程方法##$@@$##</td>
+							<td>
+								<select id="simple-newMonitor[Method]" name="simple-newMonitor[Method]">
+									<option value="rtpRtsp" selected="selected">TCP</option>
+									<option value="rtpUni">UDP</option>
+									<option value="rtpMulti">UDP Multicast</option>
+									<option value="rtpRtspHttp">HTTP Tunnel</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##远程主机用户名##$@@$##</td>
+							<td><input type="text" id="simple-newMonitor[User]" name="simple-newMonitor[User]" /></td>
+						</tr>
+						<tr>
+							<td>##$@@$##远程主机密码##$@@$##</td>
+							<td>
+								<input type="password" name="simple-newMonitor[Pass]" id="simple-newMonitor[Pass]" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##远程主机IP##$@@$##</td>
+							<td>
+								<input type="text" name="simple-newMonitor[IP]" id="simple-newMonitor[IP]" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##远程主机端口##$@@$##</td>
+							<td>
+								<input type="text" name="simple-newMonitor[Port]" id="simple-newMonitor[Port]" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>##$@@$##远程路径##$@@$##</td>
+							<td>
+								<input type="text" name="simple-newMonitor[Path]" id="simple-newMonitor[Path]" value="" />
+							</td>
+						</tr>
+					</table>
+					<table class="monitor-config-content-table-simple">
+						<tr>
+							<td width="30%"><button id="monitor_btn_advance">##$@@$##高级模式##$@@$##</button></td>
+							<td>
+								<button onclick="$('#popup_monitor_simple').hide()">##$@@$##关闭##$@@$##</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button id="mointer-simple-saveBtn">##$@@$##保存##$@@$##</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+	
+			<div class="loading-container hide" id="loading_monitor">
+				<img class="loading-icon" src="./images/ajax-loader.gif"> 
+			</div>
+
+			<!-- 点击局域网搜索出现弹窗后，再点击列表右侧图标按钮出现该弹框 -->
+			<div class="popup-container" id="popup_monitor_prob_add_mointor">
+				<div class="monitor-prob-add-container">
+					<div class="monitor-prob-add-head">
+						<div class="popup-title">局域网搜索</div>
+						<div class="popup-close" id="popup_monitor_prob_add_close" onclick="$('#popup_monitor_prob_add_mointor').hide()"></div>
+					</div>
+					<div class="monitor-prob-add-content">
+						<!--局域网搜索，添加时会给该input赋对应摄像头的key，用于后续的账号密码校验-->
+						<input type="hidden" id="moniter-prob-add-probe" name="moniter-prob-add-probe" />
+
+						<input type="hidden" id="moniter-prob-add-name" name="moniter-prob-add-name" />
+						<input type="hidden" id="moniter-prob-add-host" name="moniter-prob-add-host" />
+						<input type="hidden" id="moniter-prob-add-protocol" name="moniter-prob-add-protocol" />
+						<table id="monitor-prob-add-content-table">
+							<tr id="monitor_lan_add_probe2_-2">	
+								<td colspan="2" align="center">
+									##$@@$##请输入所选摄像头的用户名和密码##$@@$##
+								</td>
+							</tr>
+							<tr id="monitor_lan_add_probe2_-1">	
+								<td width="35%" align="right">##$@@$##账号##$@@$##</td>
+								<td width="65%" align="left">
+									<input type="text" id="moniter-prob-add-username" name="moniter-prob-add-username"/>
+								</td>
+							</tr>
+							<tr id="monitor_lan_add_probe2_0">	
+								<td align="right">##$@@$##密码##$@@$##</td>
+								<td align="left">
+									<input type="password" id="moniter-prob-add-password" name="moniter-prob-add-password"/>
+								</td>
+							</tr>
+							<tr id="monitor_lan_add_probe2_1" class="hide">	
+								<td colspan='2' align='center'>
+									##$@@$##以下列表显示了所选摄像头可用的流媒体##$@@$##
+									<br />
+									##$@@$##从列表中选择一个你想要的项##$@@$##
+								</td>
+							</tr>
+							<tr id="monitor_lan_add_probe2_2" class="hide">	
+								<td align='right'>
+									##$@@$##Detected Profiles##$@@$##
+								</td>
+								<td align='left'>
+									<select id='moniter-prob-add-detected-profiles' name='moniter-prob-add-detected-profiles'>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="monitor-prob-add-bottom">
+						<button onclick="$('#popup_monitor_prob_add_mointor').hide()">关闭</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="monitor-prob-add-button-next">下一步</button>
+						<button id="monitor-prob-add-button-pre" class="hide">上一步</button>
+						<button id="monitor-prob-add-button-save" class="monitor-prob-add-button-save hide">保存</button>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- <script type='text/javascript' src="./js/monitor.js"></script>
+	</body>
+<html> -->

@@ -1,0 +1,177 @@
+<!--[if IE]>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>ZM登录</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=8" />
+	<link rel="stylesheet" type="text/css" href="./css/login.css" />
+	<link rel="icon" type="image/ico" href="./images/favicon.ico"/>
+
+</head>
+<body style="display:none;">
+	<div class="wrapper">
+		<div class="divForm">
+			<img class="login-icon" src="images/icon_logo.png">
+			<div class="login-title">##$@@$##摄像监控##$@@$##</div>
+			<div class="form-item">
+				<input id="username" name="username" maxlength="20" placeholder="##$@@$##账号##$@@$##">
+			</div>
+			<div class="form-item">
+				<input id="password" name="password" type="password" maxlength="20" placeholder="##$@@$##密码##$@@$##">
+			</div>
+			<div class="login-message" id="loginMsg"></div>
+			<div class="form-item">
+				<button id="loginBtn">##$@@$##登入##$@@$##</button>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="/api/jquery/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/Translation.js"></script>
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript">
+		
+
+		window.onload=function(){
+			//若用户在登陆后直接退出浏览器，不是走注销流程，则此时cookie还存在，直接跳转至index页面
+			if(getCookie("access_token")){
+				window.location.href="index.html"+location.search;
+			}
+			else if(getCookie("refresh_token")){
+				refreshToken();
+			}
+
+
+
+			//注册页面翻译函数
+			window.addTranslationEvent(function(){
+				$("#username").attr("placeholder",myUNAS._($("#username").attr("placeholder")));
+				$("#password").attr("placeholder",myUNAS._($("#password").attr("placeholder")));
+			});
+			
+			//加载翻译文件
+			myUNAS.LoadTranslation("./languages/Translation.json",function(){
+				var paramLanguage = getParameterURL("language");
+				if(paramLanguage){
+					//如果跳转URL中带语言参数，则设置为对应语言
+					if(paramLanguage=="cn"){
+						window.unasTranslation('简体中文');
+					}else{
+						window.unasTranslation('English');
+					}
+					
+					//保存语言设置到cookie
+					setCookie("language", paramLanguage);
+				}else{
+					var cookieLanguage = getCookie("language");
+					if(cookieLanguage){
+						//如果cookie中获取到语言参数，则设置为对应语言
+						if(cookieLanguage=="cn"){
+							window.unasTranslation('简体中文');
+						}else{
+							window.unasTranslation('English');
+						}
+					}else{
+						//默认显示英文
+						window.unasTranslation('English');
+					}
+				}
+				
+				$("body").show();
+			});
+
+			
+
+
+			//登录按钮
+			$("#loginBtn").click(function(e){
+				var username=$("#username").val();
+				var password=$("#password").val();
+
+				if(username=="" || password==""){
+					$("#loginMsg").text(myUNAS._("##$@@$##账号或密码不能为空##$@@$##"));
+					return;
+				}
+
+				//组织请求参数
+				var _data = { user: username, pass: password };
+				//console.log(_data);
+				$.ajax({
+					url: "/zm/api/host/login.json",
+					type: "GET",
+					dataType: "json",
+					contentType: "application/json",
+					async: true,
+					data: _data,
+					timeout: 30000,
+					success: function(data){
+						//console.log(data);
+						if(data.success!="false"){
+							setCookie("access_token",data.access_token,data.access_token_expires);
+							setCookie("credentials",data.credentials,data.access_token_expires);
+							setCookie("access_token_expires",data.access_token_expires,data.access_token_expires);
+							setCookie("refresh_token",data.refresh_token,data.refresh_token_expires);
+							setCookie("refresh_token_expires",data.refresh_token_expires,data.refresh_token_expires);
+							setCookie("username",username,data.refresh_token_expires);
+							window.location.href="index.html"+location.search;
+						}
+						else{
+							$("#loginMsg").text(data.data.exception.message);
+						}
+					},
+					error:function(xhr, ajaxOptions, thrownError){
+						if(xhr.responseJSON.data.message.indexOf("Login denied")>=0){
+							$("#loginMsg").html(myUNAS._("密码错误"));
+						}
+						else if(xhr.responseJSON.data.message.indexOf("Could not")>=0){
+							$("#loginMsg").html(myUNAS._("用户名不存在"));
+						}
+						else if(xhr.responseJSON.data.message.indexOf("API disabled")>=0){
+							$("#loginMsg").html(myUNAS._("该用户禁止使用API接口"));
+						}else{
+							$("#loginMsg").html(xhr.responseJSON.data.message);
+						}
+					}
+				});
+			});
+
+			//为账号与密码的文本框注册键盘事件，按下回车也可直接登录
+			$("#username,#password").on("keyup",function(e){
+				if(e.key=="Enter"){
+					$("#loginBtn").trigger("click");
+				}
+			});
+		};
+
+
+		function refreshToken(){
+			$.ajax({
+				url: "/zm/api/host/login.json?token="+getCookie("refresh_token"),
+				type: "GET",
+				dataType: "json",
+				async: true,
+				success: function(data){
+					//console.log(data);
+					if(data && data.access_token){
+						setCookie("access_token",data.access_token,data.access_token_expires);
+						setCookie("credentials",data.credentials,data.access_token_expires);
+						window.location.href="index.html"+location.search;
+					}else{
+						//console.log('Refresh token failed. Redirected to login page.');
+						//window.location.href="login.html"+location.search;
+					}
+				},
+				error:function(xhr, ajaxOptions, thrownError){
+					//console.log('Refresh token error. Redirected to login page.');
+					//window.location.href="login.html"+location.search;
+				}
+			});
+		};
+	</script>
+</body>
+</html>
+
+
+

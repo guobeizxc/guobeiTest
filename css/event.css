@@ -1,0 +1,390 @@
+.wrapper-record{
+	padding:20px 20px;
+	color:#333;
+}
+
+.record-header-container{
+	position:relative;
+	width:100%;
+	height:40px;
+}
+.record-header-item select{
+	outline:none;
+    border: 1px solid RGB(177,177,177);
+    border-radius: 5px;
+    width: 170px;
+    height: 40px;
+    padding-left: 10px;
+    font-size:14px;
+    line-height:40px;
+}
+.record-header-item label{
+	padding:0px 5px;
+    font-size:14px;
+}
+
+.record-setting-container{
+	position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.record-setting-container select{
+	outline:none;
+    border: 1px solid RGB(177,177,177);
+    border-radius: 5px;
+    width: 70px;
+    height: 40px;
+    padding-left: 10px;
+    font-size:14px;
+    line-height:40px;
+}
+.record-setting-container select.select-codec{
+    width: 100px;
+}
+.wrapper-record.en .record-setting-container select.select-scale{
+    width: 160px;
+}
+.record-setting-container select.select-size{
+    width: 100px;
+}
+.wrapper-record.en .record-setting-container select.select-size{
+    width: 110px;
+}
+.record-setting-container label{
+	padding:0px 5px;
+    font-size:14px;
+}
+.record-setting-item{
+	margin-left:10px;
+}
+.record-setting-item #event-refreshBtn {
+    background: url(../images/icon_Refresh_normal.png) 10px center no-repeat;
+}
+.record-setting-item #event-refreshBtn:hover{
+    background: url(../images/icon_Refresh_hover.png) 10px center no-repeat;
+    cursor: pointer;
+}
+.record-setting-item button{
+    width: 80px;
+    height: 40px;
+    color: RGB(255,205,129);
+    border: 1px solid RGB(255,205,129);
+    border-radius: 5px;
+}
+
+.record-main-container{
+	position:absolute;
+	left:20px;
+	right:20px;
+	top:70px;
+	bottom:0px;
+	overflow:hidden;
+}
+
+.record-notice-empty{
+	position:absolute;
+	width:516px;
+	height:359px;
+	left:50%;
+	top:50%;
+	transform:translate(-50%, -50%);
+}
+.record-notice-text{
+	width:100%;
+	font-size:14px;
+	line-height:40px;
+	text-align:center;
+}
+
+
+.monitor-left-view{
+	position:absolute;
+	left:0px;
+	right:0px;
+	top:0px;
+	bottom:0px;
+	background:RGB(36,35,41);
+}
+
+.monitor-thumb-record-container,
+.monitor-video-player-container{
+	position:relative;
+	width:100%;
+	height:100%;
+	overflow:scroll;
+}
+
+
+.record-list-container{
+	position:absolute;
+	width:280px;
+	right:-280px;
+	top:0px;
+	bottom:0px;
+	background:rgba(0,0,0,.8);
+	
+	-webkit-transition:all .5s ease; 
+	-moz-transition:all .5s ease; 
+	-ms-transition:all .5s ease; 
+	-o-transition:all .5s ease; 
+	transition:all .5s ease;
+}
+.record-list-container.unfolded{
+	right:0px;
+}
+
+.btn-handler{
+	cursor:pointer;
+	position:absolute;
+	width:20px;
+	height:80px;
+	left:-20px;
+	top:50%;
+	margin-top:-40px;
+	background:rgba(0,0,0,.8);
+	border-radius: 6px 0px 0px 6px;
+}
+.btn-handler img{
+	position:absolute;
+	width:12px;
+	height:10px;
+	left:50%;
+	margin-left:-6px;
+	top:50%;
+	margin-top:-5px;
+}
+.btn-handler .icon-unfold{
+	display:block;
+}
+.btn-handler .icon-retract{
+	display:none;
+}
+.record-list-container.unfolded .btn-handler .icon-unfold{
+	display:none;
+}
+.record-list-container.unfolded .btn-handler .icon-retract{
+	display:block;
+}
+
+.record-list-header-container{
+	position:relative;
+	width:100%;
+	height:50px;
+	padding:10px;
+}
+.record-list-header-container select{
+	outline:none;
+	background:none;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    width: 80px;
+    height: 30px;
+    padding-left: 10px;
+    font-size:14px;
+    line-height:30px;
+	color:#fff;
+}
+.record-list-header-container select option{
+	color:#000;
+}
+.record-list-header-container select.select-year{
+    width: 90px;
+}
+
+.record-list-main{
+	position:absolute;
+	left:10px;
+	right:10px;
+	top:50px;
+	bottom:0px;
+}
+
+.record-pagination{
+	position:absolute;
+	right:10px;
+	bottom:10px;
+}
+
+
+
+/*=============================================================*/
+/*表格*/
+/*=============================================================*/
+.record-list-main .unas_table_abs{
+	position:absolute;
+	width:100%;
+	left:0px;
+	top:31px;
+	bottom:10px;
+	overflow:hidden;
+}
+.record-list-main .unas_scroll_container{
+	position:relative;
+	width:100%;
+	height:100%;
+	margin:0px;
+	padding:0px;
+	overflow:hidden;
+}
+
+.record-list-main table{
+	width:100%;
+	overflow:hidden;
+	border-collapse:collapse;
+	table-layout:fixed;
+}
+.record-list-main table th{
+	height:30px;
+	background:rgba(256,256,256,.1);
+	color:#fff;
+}
+.record-list-main table tr:nth-child(even){
+	background:rgba(256,256,256,.1);
+}
+.record-list-main table td,
+.record-list-main table th{
+	padding:0 10px;
+	text-align:center;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	font-size:14px;
+}
+.record-list-main .unas_table_title{
+	/*此处可以覆盖'.unas_table_title css'*/
+}
+.record-list-main .unas_record_content tr{
+	cursor:pointer;
+	height:30px;
+	color:#fff;
+}
+.record-list-main .unas_record_content tr.active{
+	cursor:auto;
+	color:#FFCF21;
+}
+
+/*表格列*/
+.record-list-main .td_record_name{
+	text-align:left;
+	width:50%;
+}				
+.record-list-main .td_record_length{
+	text-align:left;
+	width:50%;
+}				
+.record-list-main .td_record_operation{
+	width: 90px;
+	padding: 0px;
+}
+
+/*表格行操作icon*/
+.record-list-main .td_icon{
+    display: inline-block;
+    vertical-align:middle;
+    width: 16px;
+    height: 16px;
+    margin: 0px 5px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+.record-list-main .td_icon:hover{
+    
+}
+.record-list-main .td_icon.td_record_delete {
+    background-image: url('../images/icon_delete.png');
+}
+/*=============================================================*/
+
+
+.monitor-thumb-record{
+	position:absolute;
+	left:50%; 
+	top:50%; 
+	transform:translate(-50%, -50%);
+	background:#000;
+}
+.monitor-thumb-record.rel{
+	position:relative;
+	left:0; 
+	top:0; 
+	transform:none;
+}
+.monitor-thumb-record .screen-container{
+	position:absolute;
+	width:100%;
+	height:100%;
+	left:0px;
+	top:0px;
+	background:none;
+}
+
+.monitor-thumb-record .name-container{
+	position:absolute;
+	min-width:80px;
+	height:36px;
+	padding:0px 15px;
+	left:20px;
+	top:20px;
+	border-radius:18px;
+	background:rgba(0,0,0,.4);
+	
+	text-align:left;
+	font-size:14px;
+	color:#fff;
+	line-height:36px;
+}
+
+.monitor-thumb-record .control-panel-container{
+	position:absolute;
+	padding:5px;
+	width:100%;
+	left:0px;
+	bottom:10px;
+	background:rgba(0,0,0,0.2);
+}
+.monitor-thumb-record .control-panel{
+	position:relative;
+	margin:0px auto;
+	padding:5px 10px;
+	text-align:center;
+}
+.monitor-thumb-record .control-panel-status{
+	font-size:12px;
+	color:#fff;
+	line-height:20px;
+	text-align:center;
+}
+
+.monitor-thumb-record .progress-bar{
+	cursor:pointer;
+	position:absolute;
+	width:100%;
+	height:10px;
+	left:0px;
+	bottom:0px;
+	background:#000;
+}
+.monitor-thumb-record .progress-thumb{
+	position:absolute;
+	width:0px;
+	height:100%;
+	background:#FFCF21;
+}
+
+
+
+/*VideoJS样式*/
+.vjs-default-skin.vjs-big-play-centered .vjs-big-play-button{display:none;}
+.video-player-record{
+	position:absolute;
+	left:50%; 
+	top:50%; 
+	transform:translate(-50%, -50%);
+}
+.video-player-record.rel{
+	position:relative;
+	left:0; 
+	top:0; 
+	transform:none;
+}
